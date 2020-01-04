@@ -30,10 +30,10 @@ const LandingPage = props => {
 
 
   useEffect(() => {
-   fetchGames(baseUrl);
+    fetchGames(baseUrl);
   }, []);
 
-  const fetchGames = (url) =>{
+  const fetchGames = (url) => {
     setIsLoading(true);
     axios.get(url, {
       headers: {
@@ -46,6 +46,7 @@ const LandingPage = props => {
         setPrevPage(response.data.previous)
         setNextPage(response.data.next);
         setIsLoading(false);
+        scrollToTop();
       })
       .catch((err) => {
         console.log(err)
@@ -58,9 +59,13 @@ const LandingPage = props => {
     fetchGames(nextPage);
   }
 
-  const prevPageHandler = () =>{
+  const prevPageHandler = () => {
     console.log('prev')
     fetchGames(prevPage);
+  }
+
+  const scrollToTop = () => {
+    window.scroll({ top: 0, behavior: 'smooth' });
   }
 
   const spinner = (
@@ -72,25 +77,25 @@ const LandingPage = props => {
   return (
     <React.Fragment>
 
-    <Header />
+      <Header />
 
       {isLoading ? spinner : <GamesCard games={games} />}
 
 
       <Grid container spacing={2} justify="center">
         <Grid item>
-          <Button variant="contained" 
-          color="primary" 
-          onClick={prevPageHandler}
-          disabled={prevPage === null}>
+          <Button variant="contained"
+            color="primary"
+            onClick={prevPageHandler}
+            disabled={prevPage === null}>
             <NavigateBeforeIcon />
           </Button>
         </Grid>
         <Grid item>
           <Button variant="contained"
-          color="primary"
-          onClick={nextPageHandler}
-          disabled={nextPage === null}>
+            color="primary"
+            onClick={nextPageHandler}
+            disabled={nextPage === null}>
             <NavigateNextIcon />
           </Button>
         </Grid>
