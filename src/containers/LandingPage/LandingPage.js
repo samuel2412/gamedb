@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -12,16 +11,9 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import GamesCard from '../../components/GamesCard/GamesCard';
 import Header from '../../components/Header/Header';
 
-const useStyles = makeStyles(theme => ({
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  }
-}));
-
-
 
 const LandingPage = props => {
-  const classes = useStyles();
+  
   const baseUrl = 'https://api.rawg.io/api/games?page_size=21';
   const [games, setGames] = useState([]);
   const [nextPage, setNextPage] = useState(null);
