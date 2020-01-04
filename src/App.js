@@ -2,7 +2,7 @@ import React from 'react';
 
 
 import Layout from './components/Layout/Layout';
-import LandingPage from './components/LandingPage/LandingPage';
+import LandingPage from './containers/LandingPage/LandingPage';
 
 function App() {
   return (

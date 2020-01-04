@@ -2,7 +2,7 @@ import React from 'react';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import Menu from '../Navigation/Menu/Menu'
+import Navbar from '../Navigation/Navbar/Navbar'
 import Footer from '../Navigation/Footer/Footer';
 
 
@@ -12,7 +12,7 @@ const Layout = props => {
         <React.Fragment>
             <CssBaseline />
 
-            <Menu />
+            <Navbar />
             
             <main>
                 {props.children}
