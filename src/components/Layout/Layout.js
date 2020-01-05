@@ -7,13 +7,14 @@ import Footer from '../Navigation/Footer/Footer';
 
 
 const Layout = props => {
-
+   
+   
     return (
         <React.Fragment>
             <CssBaseline />
 
-            <Navbar />
-            
+            <Navbar/>
+
             <main>
                 {props.children}
             </main>

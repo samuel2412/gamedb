@@ -49,9 +49,7 @@ const GamesCard = props => {
                                     <Typography gutterBottom variant="h5" component="h2">
                                         {game.name}
               </Typography>
-                                    <Typography>
-                                       ...
-              </Typography>
+                                  
                                 </CardContent>
                                 <CardActions>
                                     <Button size="small" color="primary">

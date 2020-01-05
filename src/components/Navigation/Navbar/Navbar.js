@@ -12,7 +12,7 @@ const Navbar = props => {
    
     return (
         <React.Fragment>
-            <AppBar position="relative">
+            <AppBar position="fixed">
                 <Toolbar>
                         <SideDrawer />
                     <Typography variant="h6" color="inherit" noWrap>
