@@ -18,7 +18,7 @@ const Copyright = () => {
 
 const useStyles = makeStyles(theme => ({
     footer: {
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: 'transparent',
         padding: theme.spacing(6),
     },
 }));
@@ -27,7 +27,7 @@ const Footer = props => {
     const classes = useStyles();
 
     return (
-        <footer className={classes.footer}>
+        <div className={classes.footer}>
             <Typography variant="h6" align="center" gutterBottom>
                 Footer
         </Typography>
@@ -35,7 +35,7 @@ const Footer = props => {
                 Something here to give the footer a purpose!
         </Typography>
             <Copyright />
-        </footer>
+        </div>
     );
 
 }

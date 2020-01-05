@@ -13,8 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     cardGrid: {
-        paddingTop: theme.spacing(8),
-        paddingBottom: theme.spacing(8),
+        
     },
     card: {
         height: '100%',
@@ -39,6 +38,7 @@ const GamesCard = props => {
                 <Grid container spacing={4}>
                     {games.map(game => (
                         <Grid item key={game.id} xs={12} sm={6} md={4}>
+                            
                             <Card className={classes.card}>
                                 <CardMedia
                                     className={classes.cardMedia}
