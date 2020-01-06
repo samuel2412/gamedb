@@ -10,6 +10,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Game from '../Game/Game';
 
 const useStyles = makeStyles(theme => ({
     cardGrid: {
@@ -39,27 +40,7 @@ const GamesCard = props => {
                     {games.map(game => (
                         <Grid item key={game.id} xs={12} sm={6} md={4}>
                             
-                            <Card className={classes.card}>
-                                <CardMedia
-                                    className={classes.cardMedia}
-                                    image={game.background_image}
-                                    title={game.slug}
-                                />
-                                <CardContent className={classes.cardContent}>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        {game.name}
-              </Typography>
-                                  
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small" color="primary">
-                                        View
-              </Button>
-                                    <Button size="small" color="primary">
-                                        Edit
-              </Button>
-                                </CardActions>
-                            </Card>
+                        <Game game={game}/>
                         </Grid>
                     ))}
                 </Grid>
