@@ -7,7 +7,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -57,7 +56,7 @@ const GameCard = props => {
     return (
         <React.Fragment>
              
-        <Grid item key={game.id} xs={12} >
+        
                    <Card className={classes.card}>
                        <CardMedia
                            className={classes.cardMedia}
@@ -76,14 +75,14 @@ const GameCard = props => {
                        </CardContent>
                        <CardActions>
                            <Container align="center">
-                               <Button onClick={() => setShowDetail(!showDetail) } size="small" color="primary">
+                               <Button onClick={() => setShowDetail(!showDetail) } size="small" color="secondary">
                                    {showDetail ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                                </Button>
                            </Container>
                        </CardActions>
        
                    </Card>
-       </Grid>
+    
                </React.Fragment>
     );
 }

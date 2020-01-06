@@ -16,11 +16,12 @@ const GamesList = props => {
                 <Grid container spacing={4}>
 
                     {games.map(game => (
-
-                        <GameCard game={game} />
-
+                        <Grid item key={game.id} xs={12} >
+                            <GameCard game={game} />
+                        </Grid>
                     ))}
                 </Grid>
+
             </Container>
         </React.Fragment>
     );

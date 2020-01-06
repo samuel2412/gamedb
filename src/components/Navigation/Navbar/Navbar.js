@@ -14,6 +14,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
+
 import SideDrawer from './SideDrawer/SideDrawer'
 
 const useStyles = makeStyles(theme => ({
@@ -82,6 +83,7 @@ const useStyles = makeStyles(theme => ({
         paddingTop:theme.spacing(4),
         backgroundColor: 'transparent',
         boxShadow: '0',
+        
     }
 }));
 
@@ -174,7 +176,7 @@ const Navbar = props => {
                     <SideDrawer />
 
                     <Typography className={classes.title} variant="h6" noWrap>
-                        Material-UI
+                        GameDB
           </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>

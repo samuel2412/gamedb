@@ -1,11 +1,14 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+
 import Link from '@material-ui/core/Link';
+
 
 const Copyright = () => {
     return (
-        <Typography variant="body2" color="textSecondary" align="center">
+        <div style={{color:'#FFFFFF'}}>
+        <Typography variant="body2" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
                 GameDB
@@ -13,6 +16,7 @@ const Copyright = () => {
             {new Date().getFullYear()}
             {'.'}
         </Typography>
+        </div>
     );
 }
 
@@ -27,11 +31,11 @@ const Footer = props => {
     const classes = useStyles();
 
     return (
-        <div className={classes.footer}>
-            <Typography variant="h6" align="center" gutterBottom>
+        <div className={classes.footer} style={{color:'#FFFFFF'}}>
+            <Typography variant="h6" align="center" gutterBottom >
                 Footer
         </Typography>
-            <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+            <Typography variant="subtitle1" align="center" component="p">
                 Something here to give the footer a purpose!
         </Typography>
             <Copyright />

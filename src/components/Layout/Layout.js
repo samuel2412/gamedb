@@ -4,9 +4,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Navbar from '../Navigation/Navbar/Navbar'
 import Footer from '../Navigation/Footer/Footer';
+import Header from '../Header/Header'
 
 import { makeStyles } from '@material-ui/core/styles';
-
 
 const useStyles = makeStyles(theme => ({
     content: {
@@ -14,10 +14,11 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: theme.spacing(5),
     },
     outerDiv: {
-        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.85) 15%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 1) 90%)',
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.85) 15%, rgba(0, 0, 0, 0.2) 45%, rgba(0, 0, 0, 1) 90%)',
         backgroundAttachment: 'fixed',
         margin: 0,
-        height: '100vh',
+        height: '100%',
+        
     }
 }));
 
@@ -29,6 +30,7 @@ const Layout = props => {
             <CssBaseline />
             <div className={classes.outerDiv}>
                 <Navbar />
+                <Header />
                 <div className={classes.content} >
                     {props.children}
                 </div>

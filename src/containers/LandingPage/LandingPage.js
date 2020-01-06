@@ -4,6 +4,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from "@material-ui/core/Grid"
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,7 +14,7 @@ import GamesList from '../../components/GamesList/GamesList'
 
 const useStyles = makeStyles(theme => ({
   container: {
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(5),
   },
 }));
 
@@ -25,13 +26,13 @@ const LandingPage = props => {
   const [prevPage, setPrevPage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+
   useEffect(() => {
     fetchGames();
-    
+
   }, []);
 
-
-  const fetchGames = (url='https://api.rawg.io/api/games?page_size=6') => {
+  const fetchGames = (url = 'https://api.rawg.io/api/games?page_size=6') => {
     setIsLoading(true);
     axios.get(url, {
       headers: {
@@ -51,6 +52,7 @@ const LandingPage = props => {
         setIsLoading(false);
       })
   }
+
 
   const nextPageHandler = () => {
     console.log('next')
@@ -78,17 +80,24 @@ const LandingPage = props => {
 
 
       <div className={classes.container}>
-        {isLoading ? spinner : <GamesList games={games}/>}
-
-        <Container align='center' className={classes.container}>
-        <Button variant="outlined" color="primary" onClick={prevPageHandler} disabled={prevPage===null}>
-          <NavigateBeforeIcon />
-        </Button>
-        <Button variant="outlined" color="primary" onClick={nextPageHandler} disabled={nextPage===null}>
-          <NavigateNextIcon />
-        </Button>
-      </Container>
+        {isLoading ? spinner : <GamesList games={games} />}
       </div>
+
+      <Container align='center' className={classes.container}>
+          <Grid container
+            direction="row"
+            justify="space-around"
+            alignItems="center"
+            xs={6}
+          >
+            <Button variant="contained" color="secondary" onClick={prevPageHandler} disabled={prevPage === null}>
+              <NavigateBeforeIcon />
+            </Button>
+            <Button variant="contained" color="secondary" onClick={nextPageHandler} disabled={nextPage === null}>
+              <NavigateNextIcon />
+            </Button>
+          </Grid>
+        </Container>
     </React.Fragment>
   );
 }
