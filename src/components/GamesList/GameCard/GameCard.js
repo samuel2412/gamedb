@@ -60,7 +60,7 @@ const GameCard = props => {
                    <Card className={classes.card}>
                        <CardMedia
                            className={classes.cardMedia}
-                           image={game.background_image}
+                           image={game.background_image || null}
                            title={game.slug} 
                        />
                        <CardContent className={classes.cardContent}>
@@ -86,4 +86,5 @@ const GameCard = props => {
                </React.Fragment>
     );
 }
+
 export default GameCard

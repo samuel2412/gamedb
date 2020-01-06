@@ -1,18 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState,useCallback } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
-
+import Search from './Search/Search';
 
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -98,31 +96,13 @@ const Navbar = props => {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-
     const { onFetchGames } = props;
-    const [enteredFilter, setEnteredFilter] = useState('');
-    const inputRef = useRef();
-
-    useEffect(() => {
-
-        const timer = setTimeout(() => {
-            //(enteredFilter === inputRef.current.value)
-            if (enteredFilter === inputRef.current.value) {
-
-                const queryParams = enteredFilter.length === 0 ? null :
-                    `https://api.rawg.io/api/games?search="${enteredFilter}"`;
-                if (queryParams !== null) {
-                    onFetchGames(queryParams)
-                }
-            }
-        }, 500)
-
-        return () => {
-            clearTimeout(timer)
-        };
-
-    }, [enteredFilter, onFetchGames]);
-
+    
+    
+    const filterHandler = useCallback( query => {
+        console.log('filter')
+        onFetchGames(query)
+      }, [onFetchGames]);
 
     const handleProfileMenuOpen = event => {
         setAnchorEl(event.currentTarget);
@@ -208,20 +188,7 @@ const Navbar = props => {
                         GameDB
           </Typography>
                     <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                            value={enteredFilter}
-                            inputRef={inputRef}
-                            onChange={event => setEnteredFilter(event.target.value)}
-                        />
+                        <Search onFilter={filterHandler}/>
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>

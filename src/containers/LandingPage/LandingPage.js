@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useMemo } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
@@ -21,21 +21,22 @@ const useStyles = makeStyles(theme => ({
 
 const LandingPage = props => {
   const classes = useStyles();
-  const { games,nextPage,prevPage,isLoading, onFetchGames } = props;
+  const { nextPage,prevPage,isLoading, onFetchGames } = props;
 
-
-  useEffect(() => {
-    onFetchGames()
-  }, [onFetchGames]);
+  useEffect(()=>{
+    onFetchGames();
+  },[onFetchGames])
 
   const nextPageHandler = () => {
     console.log('next')
     onFetchGames(nextPage);
+    scrollToTop();
   }
 
   const prevPageHandler = () => {
     console.log('prev')
     onFetchGames(prevPage);
+    scrollToTop();
   }
 
   const scrollToTop = () => {

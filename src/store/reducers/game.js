@@ -27,12 +27,12 @@ const fetchGamesFail = (state,action) => {
     });
 } 
 
-
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case (actionTypes.FETCH_GAMES_START): return fetchGamesStart(state, action)
         case (actionTypes.FETCH_GAMES_SUCCESS): return fetchGamesSuccess(state, action)
-        case (actionTypes.FETCH_GAMES_SUCCESS): return fetchGamesFail(state, action)
+        case (actionTypes.FETCH_GAMES_FAIL): return fetchGamesFail(state, action)
+       
         default: return state;
     }
 }

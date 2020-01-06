@@ -3,7 +3,8 @@ import axios from 'axios';
 
 
 export const fetchGames = (url = `https://api.rawg.io/api/games?page_size=6`) => {
-    return dispatch => {
+console.log('fetch')    
+return dispatch => {
         dispatch(fetchGamesStart())
         axios.get(url)
             .then(response => {
@@ -12,6 +13,12 @@ export const fetchGames = (url = `https://api.rawg.io/api/games?page_size=6`) =>
             .catch(err => {
                 dispatch(fetchGamesFail(err))
             })
+    }
+}
+
+export const fetchGamesStart = () => {
+    return {
+        type: actionTypes.FETCH_GAMES_START
     }
 }
 export const fetchGamesSuccess = (data) => {
@@ -28,8 +35,3 @@ export const fetchGamesFail = (error) => {
     };
 }
 
-export const fetchGamesStart = () => {
-    return {
-        type: actionTypes.FETCH_GAMES_START
-    }
-}
