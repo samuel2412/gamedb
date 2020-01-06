@@ -69,7 +69,7 @@ const GameCard = props => {
                            </Typography>
                            <Typography variant="body2" color="textSecondary" component="p">
                                {showDetail 
-                               ?  <div dangerouslySetInnerHTML={{ __html: game.description }} ></div>
+                               ?  <span dangerouslySetInnerHTML={{ __html: game.description }} ></span>
                                : null}
                            </Typography>
                        </CardContent>

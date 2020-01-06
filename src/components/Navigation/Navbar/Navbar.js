@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
+
+
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -80,10 +84,10 @@ const useStyles = makeStyles(theme => ({
     appbar: {
         position: "static",
         height: 100,
-        paddingTop:theme.spacing(4),
+        paddingTop: theme.spacing(4),
         backgroundColor: 'transparent',
         boxShadow: '0',
-        
+
     }
 }));
 
@@ -91,9 +95,34 @@ const Navbar = props => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+
+    const { onFetchGames } = props;
+    const [enteredFilter, setEnteredFilter] = useState('');
+    const inputRef = useRef();
+
+    useEffect(() => {
+
+        const timer = setTimeout(() => {
+            //(enteredFilter === inputRef.current.value)
+            if (enteredFilter === inputRef.current.value) {
+
+                const queryParams = enteredFilter.length === 0 ? null :
+                    `https://api.rawg.io/api/games?search="${enteredFilter}"`;
+                if (queryParams !== null) {
+                    onFetchGames(queryParams)
+                }
+            }
+        }, 500)
+
+        return () => {
+            clearTimeout(timer)
+        };
+
+    }, [enteredFilter, onFetchGames]);
+
 
     const handleProfileMenuOpen = event => {
         setAnchorEl(event.currentTarget);
@@ -171,7 +200,7 @@ const Navbar = props => {
 
     return (
         <div className={classes.grow}>
-            <AppBar className={classes.appbar} style={{boxShadow: 'none'}}>
+            <AppBar className={classes.appbar} style={{ boxShadow: 'none' }}>
                 <Toolbar>
                     <SideDrawer />
 
@@ -189,6 +218,9 @@ const Navbar = props => {
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
+                            value={enteredFilter}
+                            inputRef={inputRef}
+                            onChange={event => setEnteredFilter(event.target.value)}
                         />
                     </div>
                     <div className={classes.grow} />
@@ -232,5 +264,18 @@ const Navbar = props => {
         </div>
     );
 }
+const mapStateToProps = state => {
+    return {
+        games: state.gamesReducer.games,
+    };
+}
+const mapDispatchToProps = dispatch => {
+    return {
 
-export default Navbar;
+        onFetchGames: (url) =>
+            dispatch(actions.fetchGames(url))
+
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

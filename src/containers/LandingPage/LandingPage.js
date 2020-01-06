@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -19,49 +20,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LandingPage = props => {
-
   const classes = useStyles();
-  const [games, setGames] = useState([]);
-  const [nextPage, setNextPage] = useState(null);
-  const [prevPage, setPrevPage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { games,nextPage,prevPage,isLoading, onFetchGames } = props;
 
 
   useEffect(() => {
-    fetchGames();
-
-  }, []);
-
-  const fetchGames = (url = 'https://api.rawg.io/api/games?page_size=6') => {
-    setIsLoading(true);
-    axios.get(url, {
-      headers: {
-        "User-Agent": "GameDB"
-      }
-    })
-      .then((response) => {
-        console.log(response);
-        setGames(response.data.results);
-        setPrevPage(response.data.previous)
-        setNextPage(response.data.next);
-        setIsLoading(false);
-        scrollToTop();
-      })
-      .catch((err) => {
-        console.log(err)
-        setIsLoading(false);
-      })
-  }
-
+    onFetchGames()
+  }, [onFetchGames]);
 
   const nextPageHandler = () => {
     console.log('next')
-    fetchGames(nextPage);
+    onFetchGames(nextPage);
   }
 
   const prevPageHandler = () => {
     console.log('prev')
-    fetchGames(prevPage);
+    onFetchGames(prevPage);
   }
 
   const scrollToTop = () => {
@@ -80,7 +54,7 @@ const LandingPage = props => {
 
 
       <div className={classes.container}>
-        {isLoading ? spinner : <GamesList games={games} />}
+        {isLoading ? spinner : <GamesList />}
       </div>
 
       <Container align='center' className={classes.container}>
@@ -88,7 +62,6 @@ const LandingPage = props => {
             direction="row"
             justify="space-around"
             alignItems="center"
-            xs={6}
           >
             <Button variant="contained" color="secondary" onClick={prevPageHandler} disabled={prevPage === null}>
               <NavigateBeforeIcon />
@@ -101,5 +74,24 @@ const LandingPage = props => {
     </React.Fragment>
   );
 }
+const mapStateToProps = state => {
+  return {
+      isLoading: state.gamesReducer.isLoading,
+      games: state.gamesReducer.games,
+      prevPage: state.gamesReducer.prevPage,
+      nextPage: state.gamesReducer.nextPage
+  };
+}
 
-export default LandingPage;
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+      onFetchGames: (url) =>
+          dispatch(actions.fetchGames(url))
+
+  };
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(LandingPage);
