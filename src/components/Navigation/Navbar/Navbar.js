@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../../store/actions/index';
 import Search from './Search/Search';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink,Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -67,7 +67,7 @@ const Navbar = props => {
                     }
                 }}
                 className={classes.navLink}
-                exact to='/auth'>
+                exact to='/login'>
                 <Button color="secondary"
                     variant={isLogClicked ? 'contained' : 'outlined'}
                 >
