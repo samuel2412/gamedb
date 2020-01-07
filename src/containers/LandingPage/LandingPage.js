@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState,useCallback } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import GamesList from '../../components/GamesList/GamesList';
 import Header from '../../components/Header/Header';
-
+import Search from '../../components/Search/Search'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -24,7 +24,12 @@ const LandingPage = props => {
   const classes = useStyles();
   const { games, nextPage, prevPage, isLoading, onFetchGames, onFetchGameDetail, gamesFetched } = props;
 
-  useEffect(() => {
+
+  const filterHandler = useCallback(query => {
+      onFetchGames(query)
+  }, [onFetchGames]);
+
+  useEffect( () => {
     onFetchGames();
   }, [onFetchGames])
 
@@ -77,7 +82,8 @@ const LandingPage = props => {
   return (
     <React.Fragment>
       <Header />
-
+      
+      <Search onFilter={filterHandler} />
       <div className={classes.container}>
         {isLoading ? spinner : <GamesList />}
       </div>

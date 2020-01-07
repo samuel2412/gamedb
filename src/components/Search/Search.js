@@ -11,17 +11,20 @@ const useStyles = makeStyles(theme => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
+        color: theme.palette.common.white,
+        backgroundColor: fade(theme.palette.common.black, 0.60),
         '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
+            backgroundColor: fade(theme.palette.common.black, 0.65),
         },
-        marginRight: theme.spacing(2),
-        marginLeft: 0,
-        width: '100%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        width: '80%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
+            marginLeft: '15vw',
+            marginRight: '15vw',
             width: 'auto',
         },
+       
     },
     searchIcon: {
         width: theme.spacing(7),
@@ -81,6 +84,7 @@ const Search = props => {
                         root: classes.inputRoot,
                         input: classes.inputInput,
                     }}
+                    fullWidth
                     inputProps={{ 'aria-label': 'search' }}
                     value={enteredFilter}
                     inputRef={inputRef}
