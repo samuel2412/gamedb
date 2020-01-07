@@ -7,7 +7,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 
 const useStyles = makeStyles(theme => ({
-    
+
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -42,49 +42,51 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up('md')]: {
             width: 200,
         },
-    },   
-  
+    },
+
 }));
 
 const Search = props => {
     const classes = useStyles();
-   
+
     const { onFilter } = props;
     const [enteredFilter, setEnteredFilter] = useState(undefined);
     const inputRef = useRef();
 
-     useEffect(()=>{
-        const timer =setTimeout(()=>{
-          if(enteredFilter === inputRef.current.value){
-            const query = enteredFilter === null ? undefined :`https://api.rawg.io/api/games?search="${enteredFilter}"`;
-             onFilter(query);
-          }
-        },500)
-    
-        return () => {
-          clearTimeout(timer)
-        };
-    
-      },[enteredFilter,onFilter]); 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (enteredFilter === inputRef.current.value) {
+                const query = enteredFilter === null ? undefined : `https://api.rawg.io/api/games?search="${enteredFilter}"`;
+                onFilter(query);
+            }
+        }, 500)
 
-     
+        return () => {
+            clearTimeout(timer)
+        };
+
+    }, [enteredFilter, onFilter]);
+
+
 
     return (
         <React.Fragment>
-            <div className={classes.searchIcon}>
-                <SearchIcon />
+            <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                    <SearchIcon />
+                </div>
+                <InputBase
+                    placeholder="Search…"
+                    classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                    }}
+                    inputProps={{ 'aria-label': 'search' }}
+                    value={enteredFilter}
+                    inputRef={inputRef}
+                    onChange={event => setEnteredFilter(event.target.value)}
+                />
             </div>
-            <InputBase
-                placeholder="Search…"
-                classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-                value={enteredFilter}
-                inputRef={inputRef}
-                onChange={event => setEnteredFilter(event.target.value)}
-            />
         </React.Fragment>
 
     );

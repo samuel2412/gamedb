@@ -36,8 +36,8 @@ const fetchGameDetailStart = (state,action) => {
 } 
 const fetchGameDetailSuccess = (state,action) => {
    
-    const indexOldElement = state.games.findIndex(({ id }) => id == action.data.id);
-    const newArray = Object.assign([... state.games], {[indexOldElement]:  action.data});
+    const indexOldElement = state.games.findIndex(({ id }) => id === action.data.id);
+    const newArray = Object.assign([...state.games], {[indexOldElement]:  action.data});
 
     return updateObject(state, {
         games: newArray,

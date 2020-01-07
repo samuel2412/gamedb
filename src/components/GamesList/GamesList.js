@@ -1,6 +1,5 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
