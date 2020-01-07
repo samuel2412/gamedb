@@ -10,7 +10,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { makeStyles } from '@material-ui/core/styles';
 
-import GamesList from '../../components/GamesList/GamesList'
+import GamesList from '../../components/GamesList/GamesList';
+import Header from '../../components/Header/Header';
 
 
 const useStyles = makeStyles(theme => ({
@@ -75,6 +76,7 @@ const LandingPage = props => {
 
   return (
     <React.Fragment>
+      <Header />
 
       <div className={classes.container}>
         {isLoading ? spinner : <GamesList />}

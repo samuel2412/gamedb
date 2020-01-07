@@ -87,7 +87,7 @@ const Search = props => {
                     onChange={event => setEnteredFilter(event.target.value)}
                 />
             </div>
-            <div style={{flexGrow: 1}}></div>
+            
         </React.Fragment>
 
     );

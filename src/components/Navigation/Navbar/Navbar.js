@@ -1,7 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { connect } from 'react-redux';
+
 import * as actions from '../../../store/actions/index';
 import Search from './Search/Search';
+import { NavLink, Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -22,17 +24,23 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
+        color: '#FFFFFF'
     },
     appbar: {
         position: "static",
         backgroundColor: 'transparent',
         boxShadow: 'none',
-    }
+    },
+    navLink: {
+        textDecoration: 'none',
+    },
+
 }));
 
 const Navbar = props => {
     const classes = useStyles();
     const { onFetchGames } = props;
+    const [isLogClicked, setIsLogClicked] = useState('')
 
 
     const filterHandler = useCallback(query => {
@@ -40,7 +48,34 @@ const Navbar = props => {
         onFetchGames(query)
     }, [onFetchGames]);
 
-
+    const title = (
+        <Link to='/' className={classes.navLink}>
+            <Typography className={classes.title} variant="h6" noWrap>
+                GameDB
+                     </Typography>
+        </Link>
+    );
+    const loginButton = (
+        <React.Fragment>
+            <div style={{ flexGrow: 1 }}></div>
+            <NavLink
+                isActive={(match) => {
+                    if (match) {
+                        setIsLogClicked(true)
+                    } else {
+                        setIsLogClicked(false)
+                    }
+                }}
+                className={classes.navLink}
+                exact to='/auth'>
+                <Button color="secondary"
+                    variant={isLogClicked ? 'contained' : 'outlined'}
+                >
+                    Login
+        </Button>
+            </NavLink>
+        </React.Fragment>
+    );
 
     return (
         <div className={classes.grow}>
@@ -48,14 +83,12 @@ const Navbar = props => {
                 <Toolbar>
                     <SideDrawer />
 
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        GameDB
-                     </Typography>
+                    {title}
 
                     <Search onFilter={filterHandler} />
-                
-                    <Button color="inherit" variant="outlined">Login</Button>
-                    <Button color="inherit" variant="contained">Sign up</Button>
+
+                    {loginButton}
+
                 </Toolbar>
             </AppBar>
         </div>

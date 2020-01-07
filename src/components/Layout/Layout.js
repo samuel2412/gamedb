@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Navbar from '../Navigation/Navbar/Navbar'
 import Footer from '../Navigation/Footer/Footer';
-import Header from '../Header/Header'
+
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -30,7 +30,6 @@ const Layout = props => {
             <CssBaseline />
             <div className={classes.outerDiv}>
                 <Navbar />
-                <Header />
                 <div className={classes.content} >
                     {props.children}
                 </div>
