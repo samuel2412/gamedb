@@ -21,17 +21,17 @@ const useStyles = makeStyles(theme => ({
 
 const LandingPage = props => {
   const classes = useStyles();
-  const { games,nextPage,prevPage,isLoading, onFetchGames,onFetchGameDetail,gamesFetched } = props;
+  const { games, nextPage, prevPage, isLoading, onFetchGames, onFetchGameDetail, gamesFetched } = props;
 
-  useEffect(()=>{
+  useEffect(() => {
     onFetchGames();
-  },[onFetchGames])
+  }, [onFetchGames])
 
-  useEffect(()=>{
-    games.map(game=>{
-      onFetchGameDetail(game.id)  
-    })  
-  },[gamesFetched,onFetchGameDetail])
+  useEffect(() => {
+    games.map(game => {
+      onFetchGameDetail(game.id)
+    })
+  }, [gamesFetched, onFetchGameDetail])
 
   const nextPageHandler = () => {
     console.log('next')
@@ -56,38 +56,42 @@ const LandingPage = props => {
     </Container>
   )
 
+  const buttonsContainer = (
+    <Container align='center' className={classes.container}>
+      <Grid container
+        direction="row"
+        justify="space-around"
+        alignItems="center"
+      >
+        <Button variant="contained" color="secondary" onClick={prevPageHandler} disabled={prevPage === null}>
+          <NavigateBeforeIcon />
+        </Button>
+        <Button variant="contained" color="secondary" onClick={nextPageHandler} disabled={nextPage === null}>
+          <NavigateNextIcon />
+        </Button>
+      </Grid>
+    </Container>
+  )
+
   return (
     <React.Fragment>
-
 
       <div className={classes.container}>
         {isLoading ? spinner : <GamesList />}
       </div>
 
-      <Container align='center' className={classes.container}>
-          <Grid container
-            direction="row"
-            justify="space-around"
-            alignItems="center"
-          >
-            <Button variant="contained" color="secondary" onClick={prevPageHandler} disabled={prevPage === null}>
-              <NavigateBeforeIcon />
-            </Button>
-            <Button variant="contained" color="secondary" onClick={nextPageHandler} disabled={nextPage === null}>
-              <NavigateNextIcon />
-            </Button>
-          </Grid>
-        </Container>
+       {buttonsContainer}
+
     </React.Fragment>
   );
 }
 const mapStateToProps = state => {
   return {
-      isLoading: state.gamesReducer.isLoading,
-      games: state.gamesReducer.games,
-      prevPage: state.gamesReducer.prevPage,
-      nextPage: state.gamesReducer.nextPage,
-      gamesFetched: state.gamesReducer.gamesFetched,
+    isLoading: state.gamesReducer.isLoading,
+    games: state.gamesReducer.games,
+    prevPage: state.gamesReducer.prevPage,
+    nextPage: state.gamesReducer.nextPage,
+    gamesFetched: state.gamesReducer.gamesFetched,
   };
 }
 
@@ -95,14 +99,14 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
 
-      onFetchGames: (url) =>
-          dispatch(actions.fetchGames(url)),
+    onFetchGames: (url) =>
+      dispatch(actions.fetchGames(url)),
 
     onFetchGameDetail: (id) =>
-          dispatch(actions.fetchGameDetail(id))
+      dispatch(actions.fetchGameDetail(id))
 
   };
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(LandingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
