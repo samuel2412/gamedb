@@ -1,4 +1,4 @@
-import React, { useEffect,useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
@@ -21,11 +21,17 @@ const useStyles = makeStyles(theme => ({
 
 const LandingPage = props => {
   const classes = useStyles();
-  const { nextPage,prevPage,isLoading, onFetchGames } = props;
+  const { games,nextPage,prevPage,isLoading, onFetchGames,onFetchGameDetail,gamesFetched } = props;
 
   useEffect(()=>{
     onFetchGames();
-  },[onFetchGames])
+  },[])
+
+  useEffect(()=>{
+    games.map(game=>{
+      onFetchGameDetail(game.id)  
+    })  
+  },[gamesFetched])
 
   const nextPageHandler = () => {
     console.log('next')
@@ -80,7 +86,8 @@ const mapStateToProps = state => {
       isLoading: state.gamesReducer.isLoading,
       games: state.gamesReducer.games,
       prevPage: state.gamesReducer.prevPage,
-      nextPage: state.gamesReducer.nextPage
+      nextPage: state.gamesReducer.nextPage,
+      gamesFetched: state.gamesReducer.gamesFetched,
   };
 }
 
@@ -89,7 +96,10 @@ const mapDispatchToProps = dispatch => {
   return {
 
       onFetchGames: (url) =>
-          dispatch(actions.fetchGames(url))
+          dispatch(actions.fetchGames(url)),
+
+    onFetchGameDetail: (id) =>
+          dispatch(actions.fetchGameDetail(id))
 
   };
 }

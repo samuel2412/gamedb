@@ -1,5 +1,6 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -8,8 +9,6 @@ import GameCard from './GameCard/GameCard';
 
 const GamesList = props => {
     const games = props.games;
-
-
 
     return (
         <React.Fragment>
@@ -33,5 +32,6 @@ const mapStateToProps = state => {
     };
   }
   
+
   
   export default connect(mapStateToProps)(GamesList);

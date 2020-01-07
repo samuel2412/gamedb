@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -29,62 +28,42 @@ const useStyles = makeStyles(theme => ({
 
 const GameCard = props => {
     const classes = useStyles();
-    const [game, setGame] = useState(props.game);
+    const game = props.game;
     const [showDetail, setShowDetail] = useState(false);
- 
-
-    useEffect(() => {
-        fetchDetail();
-    }, []);
-
-    const fetchDetail = () => {
-        axios.get(`https://api.rawg.io/api/games/${game.id}`, {
-            headers: {
-                "User-Agent": "GameDB"
-            }
-        })
-            .then((response) => {
-                setGame(response.data)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
-
-
 
     return (
         <React.Fragment>
-             
-        
-                   <Card className={classes.card}>
-                       <CardMedia
-                           className={classes.cardMedia}
-                           image={game.background_image || null}
-                           title={game.slug} 
-                       />
-                       <CardContent className={classes.cardContent}>
-                           <Typography gutterBottom variant="h5" component="h2">
-                               {game.name}
-                           </Typography>
-                           <Typography variant="body2" color="textSecondary" component="p">
-                               {showDetail 
-                               ?  <span dangerouslySetInnerHTML={{ __html: game.description }} ></span>
-                               : null}
-                           </Typography>
-                       </CardContent>
-                       <CardActions>
-                           <Container align="center">
-                               <Button onClick={() => setShowDetail(!showDetail) } size="small" color="secondary">
-                                   {showDetail ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                               </Button>
-                           </Container>
-                       </CardActions>
-       
-                   </Card>
-    
-               </React.Fragment>
+
+
+            <Card className={classes.card}>
+                <CardMedia
+                    className={classes.cardMedia}
+                    image={game.background_image || null}
+                    title={game.slug}
+                />
+                <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {game.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {showDetail
+                            ? <span dangerouslySetInnerHTML={{ __html: game.description }} ></span>
+                            : null}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Container align="center">
+                        <Button onClick={() => setShowDetail(!showDetail)} size="small" color="secondary">
+                            {showDetail ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                        </Button>
+                    </Container>
+                </CardActions>
+
+            </Card>
+
+        </React.Fragment>
     );
 }
 
-export default GameCard
+
+export default GameCard;

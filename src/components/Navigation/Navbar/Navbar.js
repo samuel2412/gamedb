@@ -82,7 +82,6 @@ const useStyles = makeStyles(theme => ({
     appbar: {
         position: "static",
         height: 100,
-        paddingTop: theme.spacing(4),
         backgroundColor: 'transparent',
         boxShadow: '0',
 

@@ -50,12 +50,8 @@ const Search = props => {
     const classes = useStyles();
    
     const { onFilter } = props;
-    const [enteredFilter, setEnteredFilter] = useState(null);
+    const [enteredFilter, setEnteredFilter] = useState(undefined);
     const inputRef = useRef();
-
-
-   //const queryParams = enteredFilter.length === 0 ? null :`https://api.rawg.io/api/games?search="${enteredFilter}"`;
-
 
      useEffect(()=>{
         const timer =setTimeout(()=>{

@@ -1,3 +1,4 @@
 export{
-    fetchGames
+    fetchGames,
+    fetchGameDetail
 } from './game'
