@@ -28,9 +28,9 @@ const LandingPage = props => {
   }, [onFetchGames])
 
   useEffect(() => {
-    games.map(game => {
+    games.map(game => (
       onFetchGameDetail(game.id)
-    })
+    ))
   }, [gamesFetched, onFetchGameDetail])
 
   const nextPageHandler = () => {

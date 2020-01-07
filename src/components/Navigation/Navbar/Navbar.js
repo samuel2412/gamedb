@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button'
 
 
 
@@ -24,10 +25,8 @@ const useStyles = makeStyles(theme => ({
     },
     appbar: {
         position: "static",
-        height: 100,
         backgroundColor: 'transparent',
-        boxShadow: '0',
-
+        boxShadow: 'none',
     }
 }));
 
@@ -45,7 +44,7 @@ const Navbar = props => {
 
     return (
         <div className={classes.grow}>
-            <AppBar className={classes.appbar} style={{ boxShadow: 'none' }}>
+            <AppBar className={classes.appbar}>
                 <Toolbar>
                     <SideDrawer />
 
@@ -54,7 +53,9 @@ const Navbar = props => {
                      </Typography>
 
                     <Search onFilter={filterHandler} />
-
+                
+                    <Button color="inherit" variant="outlined">Login</Button>
+                    <Button color="inherit" variant="contained">Sign up</Button>
                 </Toolbar>
             </AppBar>
         </div>
