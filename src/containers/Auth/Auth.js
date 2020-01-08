@@ -112,7 +112,7 @@ const Auth = props => {
   let redirect = null;
   if (props.isAuth) {
       redirect = (
-          <Redirect to={props.authRedirectPath} />
+          <Redirect to='/' />
       )
   }
  

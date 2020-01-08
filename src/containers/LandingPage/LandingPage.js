@@ -1,4 +1,4 @@
-import React, { useEffect,useState,useCallback } from 'react';
+import React, { useEffect,useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 const LandingPage = props => {
   const classes = useStyles();
-  const { games, nextPage, prevPage, isLoading, onFetchGames, onFetchGameDetail, gamesFetched } = props;
+  const { games, nextPage, prevPage, isLoading, onFetchGames,} = props;
 
 
   const filterHandler = useCallback(query => {
@@ -33,20 +33,13 @@ const LandingPage = props => {
     onFetchGames();
   }, [onFetchGames])
 
-  useEffect(() => {
-    games.map(game => (
-      onFetchGameDetail(game.id)
-    ))
-  }, [gamesFetched, onFetchGameDetail])
 
   const nextPageHandler = () => {
-    console.log('next')
     onFetchGames(nextPage);
     scrollToTop();
   }
 
   const prevPageHandler = () => {
-    console.log('prev')
     onFetchGames(prevPage);
     scrollToTop();
   }
@@ -58,7 +51,7 @@ const LandingPage = props => {
 
   const spinner = (
     <Container maxWidth="sm" align="center">
-      <CircularProgress />
+      <CircularProgress color="secondary"/>
     </Container>
   )
 
@@ -85,7 +78,7 @@ const LandingPage = props => {
       
       <Search onFilter={filterHandler} />
       <div className={classes.container}>
-        {isLoading ? spinner : <GamesList />}
+        {isLoading ? spinner : <GamesList games={games}/>}
       </div>
 
        {buttonsContainer}
@@ -99,7 +92,6 @@ const mapStateToProps = state => {
     games: state.gamesReducer.games,
     prevPage: state.gamesReducer.prevPage,
     nextPage: state.gamesReducer.nextPage,
-    gamesFetched: state.gamesReducer.gamesFetched,
   };
 }
 
@@ -109,9 +101,6 @@ const mapDispatchToProps = dispatch => {
 
     onFetchGames: (url) =>
       dispatch(actions.fetchGames(url)),
-
-    onFetchGameDetail: (id) =>
-      dispatch(actions.fetchGameDetail(id))
 
   };
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -24,13 +23,7 @@ const GamesList = props => {
             </Container>
         </React.Fragment>
     );
-}
-const mapStateToProps = state => {
-    return {
-        games: state.gamesReducer.games,
-    };
-  }
-  
+}  
 
   
-  export default connect(mapStateToProps)(GamesList);
+  export default GamesList;
