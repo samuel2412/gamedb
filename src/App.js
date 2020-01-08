@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Layout from './components/Layout/Layout';
@@ -44,4 +44,4 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.authCheckState())
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

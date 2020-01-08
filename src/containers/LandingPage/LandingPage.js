@@ -1,6 +1,5 @@
 import React, { useEffect,useState,useCallback } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -10,6 +9,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { makeStyles } from '@material-ui/core/styles';
 
+import * as actions from '../../store/actions/index';
 import GamesList from '../../components/GamesList/GamesList';
 import Header from '../../components/Header/Header';
 import Search from '../../components/Search/Search'

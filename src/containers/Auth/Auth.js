@@ -130,7 +130,7 @@ const Auth = props => {
         {errorMessage}
 
 
-        <form className={classes.form} noValidate onSubmit={onSubmitHandler}>
+        <form className={classes.form} onSubmit={onSubmitHandler}>
           <Grid container spacing={2}>
 
             {formElementsArray.map(formElement => (
@@ -160,9 +160,6 @@ const Auth = props => {
             {isSignup ? 'Sign up' : 'Login'}
           </Button>
           <Grid container>
-            <Grid item xs>
-              {isSignup ? null : <Button>Forgot password?</Button>}
-            </Grid>
             <Grid item>
               <Button onClick={() => {setIsSignup(!isSignup)} }>
                 {isSignup ? "Already have an account? Login"

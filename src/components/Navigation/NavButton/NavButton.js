@@ -25,7 +25,6 @@ const NavButton = props => {
                     setIsLogClicked(false)
                 }
             }}
-            className={classes.navLink}
             exact to={props.link}>
             <Button color="secondary"
                 variant={isLogClicked ? 'contained' : 'outlined'}
