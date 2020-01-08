@@ -12,6 +12,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Grid from '@material-ui/core/Grid';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 
 const useStyles = makeStyles(theme => ({
@@ -31,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 const GameCard = props => {
     const classes = useStyles();
     const [game, setGame] = useState(props.game);
-    const [showDetail, setShowDetail] = useState(false);
+    const [showDetail, setShowDetail] = useState(props.children);
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchGameDetail = () => {
@@ -76,15 +81,32 @@ const GameCard = props => {
                     ? <span dangerouslySetInnerHTML={{ __html: game.description }} ></span>
                     : null}
             </Typography>
+            <Container align='center' >
+            {props.isAuth ?
+                <Button size="small" color="secondary">
+                     <FavoriteIcon />
+                </Button>
+            : null }
+             {props.isAuth ?
+                <Button size="small" color="secondary">
+                     <CheckCircleIcon />
+                </Button>
+            : null }
+            </Container>
         </CardContent>
     );
 
+
+
     const cardActions = (
         <CardActions>
-            <Container align="center">
-                <Button onClick={() => fetchDetail()} size="small" color="secondary">
-                    {showDetail ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                </Button>
+            <Container align='center' >
+
+                {props.children ? null :
+                    <Button onClick={() => fetchDetail()} size="small" color="secondary">
+                        {showDetail ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                    </Button>
+                }
             </Container>
         </CardActions>
     );
@@ -92,16 +114,18 @@ const GameCard = props => {
     return (
         <React.Fragment>
 
+            <Grid item xs={12} >
 
-            <Card className={classes.card}>
+                <Card className={classes.card}>
 
-                {cardMedia}
+                    {cardMedia}
 
-                {cardContent}
+                    {cardContent}
 
-                {cardActions}
+                    {cardActions}
 
-            </Card>
+                </Card>
+            </Grid>
 
         </React.Fragment>
     );

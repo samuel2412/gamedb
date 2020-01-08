@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 const LandingPage = props => {
   const classes = useStyles();
-  const { games, nextPage, prevPage, isLoading, onFetchGames,} = props;
+  const { games, nextPage, prevPage, isLoading, onFetchGames,isAuth} = props;
 
 
   const filterHandler = useCallback(query => {
@@ -78,7 +78,7 @@ const LandingPage = props => {
       
       <Search onFilter={filterHandler} />
       <div className={classes.container}>
-        {isLoading ? spinner : <GamesList games={games}/>}
+        {isLoading ? spinner : <GamesList games={games} isAuth={isAuth}/>}
       </div>
 
        {buttonsContainer}
@@ -92,6 +92,7 @@ const mapStateToProps = state => {
     games: state.gamesReducer.games,
     prevPage: state.gamesReducer.prevPage,
     nextPage: state.gamesReducer.nextPage,
+    isAuth: state.authReducer.tokenId !== null,
   };
 }
 
