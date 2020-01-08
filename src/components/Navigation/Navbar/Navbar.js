@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -26,9 +26,11 @@ const useStyles = makeStyles(theme => ({
         color: '#FFFFFF',
     },
     appbar: {
-        position: "static",
-        backgroundColor: 'transparent',
+        position: "fixed",
+        padding: theme.spacing(1),
+        top: '0',
         boxShadow: 'none',
+        
     },
     logo: {
         height: '30px',
@@ -38,9 +40,35 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+//transition: 'backgroundColor 2000ms linear',
 const Navbar = props => {
     const classes = useStyles();
     const { isAuth } = props;
+    const [color, setColor] = useState({
+        backgroundColor: 'transparent',
+        transition: 'background 500ms linear'
+    })
+   
+
+    useEffect(()=>{
+        window.addEventListener('scroll', listenScrollEvent)
+    },[])
+
+    const listenScrollEvent = e => {
+        if (window.scrollY > 100) {
+            setColor({
+                backgroundColor: 'black',
+                transition: 'background 500ms linear'
+            })
+        }else{
+            setColor({
+                backgroundColor: 'transparent',
+                transition: 'background 500ms linear'
+            })
+        }
+    }
+
+
 
     const title = (
         <Link to='/' className={classes.navLink}>
@@ -54,9 +82,9 @@ const Navbar = props => {
             </div>
         </Link>
     );
-    console.log(isAuth)
+
     const loginButton = (
-      
+
         <React.Fragment>
             <div style={{ flexGrow: 1 }}></div>
 
@@ -71,7 +99,7 @@ const Navbar = props => {
 
     return (
         <div className={classes.grow}>
-            <AppBar className={classes.appbar}>
+            <AppBar className={classes.appbar} style={ color }>
                 <Toolbar>
                     <SideDrawer />
 

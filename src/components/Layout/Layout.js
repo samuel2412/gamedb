@@ -9,16 +9,24 @@ import Footer from '../Navigation/Footer/Footer';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-    content: {
-        paddingTop: theme.spacing(5),
-        paddingBottom: theme.spacing(5),
-    },
     outerDiv: {
         backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.85) 15%, rgba(0, 0, 0, 0.2) 45%, rgba(0, 0, 0, 1) 90%)',
         backgroundAttachment: 'fixed',
         margin: 0,
-        height: '100%',
-        
+        height:'100%',
+        minHeight: '100vh',
+        position: 'relative',
+    },
+    content: {
+        paddingTop: theme.spacing(5),
+        paddingBottom: theme.spacing(25),
+        height: 'auto',
+    },
+    footer: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        height: 'auto',
     }
 }));
 
@@ -33,9 +41,12 @@ const Layout = props => {
                 <div className={classes.content} >
                     {props.children}
                 </div>
+                <div className={classes.footer}>
                 <Footer />
-
+                </div>
+               
             </div>
+
         </React.Fragment>
     );
 }
