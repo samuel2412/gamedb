@@ -6,7 +6,6 @@ const initialState = {
     nextPage: null,
     prevPage: null,
     isLoading: false,
-    gamesFetched: false,
 }
 
 const fetchGamesStart = (state,action) => {
@@ -20,12 +19,11 @@ const fetchGamesSuccess = (state,action) => {
         nextPage: action.data.next,
         prevPage: action.data.previous,
         isLoading: false,
-        gamesFetched: !state.gamesFetched
     });
 } 
 const fetchGamesFail = (state,action) => {
     return updateObject(state, {
-        isLoading: false
+        isLoading: false,
     });
 } 
 

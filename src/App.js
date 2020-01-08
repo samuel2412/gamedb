@@ -18,7 +18,7 @@ const App = props =>{
     <Switch>
       <Route path='/authentication' component={Auth} />
       <Route path='/logout' component={Logout} />
-      <Route exact path='/' component={LandingPage} />
+      <Route exact path="/" component={ LandingPage } />
       <Redirect to='/' />
     </Switch>
 

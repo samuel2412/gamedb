@@ -101,7 +101,7 @@ const Navbar = props => {
         <div className={classes.grow}>
             <AppBar className={classes.appbar} style={ color }>
                 <Toolbar>
-                    <SideDrawer />
+                    <SideDrawer isAuth={isAuth}/>
 
                     {title}
 
