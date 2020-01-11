@@ -6,6 +6,7 @@ const initialState = {
     nextPage: null,
     prevPage: null,
     isLoading: false,
+    gameCount: 0
 }
 
 const fetchGamesStart = (state,action) => {
@@ -19,6 +20,7 @@ const fetchGamesSuccess = (state,action) => {
         nextPage: action.data.next,
         prevPage: action.data.previous,
         isLoading: false,
+        gameCount: action.data.count
     });
 } 
 const fetchGamesFail = (state,action) => {

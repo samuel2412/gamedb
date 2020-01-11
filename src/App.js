@@ -20,8 +20,8 @@ const App = props =>{
       <Route path='/authentication' component={Auth} />
       <Route path='/logout' component={Logout} />
       <Route path='/game/:id' component={GameDetail} />
-      <Route exact path="/" component={ LandingPage } />
-      <Redirect to='/' />
+      <Route exact path="/:page" component={ LandingPage } />
+      <Redirect to='/1' />
     </Switch>
 
   );
