@@ -1,22 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import Button from '@material-ui/core/Button';
+import Media from './Media/Media';
+import Content from './Content/Content';
+import Actions from './Actions/Actions';
+
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 
 const useStyles = makeStyles(theme => ({
@@ -24,19 +15,14 @@ const useStyles = makeStyles(theme => ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-    },
-    cardMedia: {
-        paddingTop: '56.25%', // 16:9
-    },
-    cardContent: {
-        flexGrow: 1,
     }
 }));
 
 const GameCard = props => {
     const classes = useStyles();
     const [game, setGame] = useState(props.game);
-    const [showDetail, setShowDetail] = useState(props.children);
+    const [expanded, setExpanded] = useState(false);
+    const [favorite, setFavorite] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchGameDetail = () => {
@@ -51,65 +37,15 @@ const GameCard = props => {
             })
 
     }
-    const fetchDetail = () => {
+    const handleExpandClick = () => {
         if (!game.description) {
             fetchGameDetail();
         }
-        setShowDetail(!showDetail);
+        setExpanded(!expanded);
+    };
+    const handleFavoriteClick = () =>{
+        setFavorite(!favorite)
     }
-
-    const cardMedia = (
-        <CardMedia
-            className={classes.cardMedia}
-            image={game.background_image || null}
-            title={game.slug}
-        />
-    );
-
-    const cardContent = (
-        <CardContent className={classes.cardContent}>
-            <Typography gutterBottom variant="h5" component="h2">
-                {game.name}
-            </Typography>
-
-            {isLoading
-                ? <LinearProgress color="secondary" />
-                : null}
-
-            <Typography variant="body2" color="textSecondary" component="p">
-                {showDetail
-                    ? <span dangerouslySetInnerHTML={{ __html: game.description }} ></span>
-                    : null}
-            </Typography>
-            <Container align='center' >
-            {props.isAuth ?
-                <Button size="small" color="secondary">
-                     <FavoriteIcon />
-                </Button>
-            : null }
-             {props.isAuth ?
-                <Button size="small" color="secondary">
-                     <CheckCircleIcon />
-                </Button>
-            : null }
-            </Container>
-        </CardContent>
-    );
-
-
-
-    const cardActions = (
-        <CardActions>
-            <Container align='center' >
-
-                {props.children ? null :
-                    <Button onClick={() => fetchDetail()} size="small" color="secondary">
-                        {showDetail ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                    </Button>
-                }
-            </Container>
-        </CardActions>
-    );
 
     return (
         <React.Fragment>
@@ -118,11 +54,21 @@ const GameCard = props => {
 
                 <Card className={classes.card}>
 
-                    {cardMedia}
+                    <Media image={game.background_image} />
 
-                    {cardContent}
+                    <Content
+                    name={game.name}
+                    description={game.description}
+                    expanded={expanded}
+                    isLoading={isLoading}
+                    />
 
-                    {cardActions}
+                    <Actions
+                     handleFavoriteClick={handleFavoriteClick}
+                     handleExpandClick={handleExpandClick}
+                     favorite={favorite}
+                     expanded={expanded}
+                     />
 
                 </Card>
             </Grid>
