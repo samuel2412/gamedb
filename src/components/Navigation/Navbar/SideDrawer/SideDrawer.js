@@ -35,11 +35,6 @@ const SideDrawer = props => {
         setState(open);
     };
 
-    const redirect = (event, path) => {
-        event.preventDefault();
-        props.history.push(path);
-    }
-
     const sideList = () => (
         <div
             className={classes.list}

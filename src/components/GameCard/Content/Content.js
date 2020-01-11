@@ -5,10 +5,11 @@ import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Collapse from '@material-ui/core/Collapse';
 import { makeStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider'
 
 
 
-const useStyles = makeStyles(theme => ({   
+const useStyles = makeStyles(theme => ({
     cardContent: {
         flexGrow: 1,
     },
@@ -27,13 +28,15 @@ const useStyles = makeStyles(theme => ({
 const Content = props => {
     const classes = useStyles();
 
-   return (
+    return (
 
         <CardContent className={classes.cardContent}>
             <Typography gutterBottom variant="h5" component="h2">
                 {props.name}
             </Typography>
             <Collapse in={props.expanded} timeout="auto" unmountOnExit>
+
+                <Divider variant="middle" />
 
                 {props.isLoading
                     ? <LinearProgress color="secondary" />
@@ -42,6 +45,12 @@ const Content = props => {
                 <Typography variant="body2" color="textSecondary" component="p">
                     <span dangerouslySetInnerHTML={{ __html: props.description }} ></span>
                 </Typography>
+
+                <Divider variant="middle" />
+
+                {props.children}
+
+
             </Collapse>
         </CardContent>
 

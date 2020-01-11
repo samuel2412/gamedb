@@ -20,9 +20,11 @@ const useStyles = makeStyles(theme => ({
 
 const GameCard = props => {
     const classes = useStyles();
+    const {isAuth} = props;
     const [game, setGame] = useState(props.game);
     const [expanded, setExpanded] = useState(false);
     const [favorite, setFavorite] = useState(false);
+    const [done,setDone] =useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchGameDetail = () => {
@@ -44,7 +46,10 @@ const GameCard = props => {
         setExpanded(!expanded);
     };
     const handleFavoriteClick = () =>{
-        setFavorite(!favorite)
+        setFavorite(!favorite);
+    }
+    const handleDoneClick = () =>{
+        setDone(!done);
     }
 
     return (
@@ -61,11 +66,14 @@ const GameCard = props => {
                     description={game.description}
                     expanded={expanded}
                     isLoading={isLoading}
+                    children={props.children}
                     />
 
                     <Actions
                      handleFavoriteClick={handleFavoriteClick}
                      handleExpandClick={handleExpandClick}
+                     handleDoneClick={handleDoneClick}
+                     done={done}
                      favorite={favorite}
                      expanded={expanded}
                      />

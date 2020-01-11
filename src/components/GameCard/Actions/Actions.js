@@ -3,7 +3,7 @@ import React from 'react';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import DoneIcon from '@material-ui/icons/Done';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CardActions from '@material-ui/core/CardActions';
@@ -24,29 +24,31 @@ const useStyles = makeStyles(theme => ({
 const Actions = props => {
     const classes = useStyles();
 
-    return(
+    return (
         <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites"
-            onClick={props.handleFavoriteClick}
-            aria-expanded={props.favorite}
-            style={props.favorite ? {color:'red'}: null}
+            <IconButton aria-label="add to favorites"
+                onClick={props.handleFavoriteClick}
+                style={props.favorite ? { color: 'red' } : null}
             >
-            <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-            <ShareIcon />
-        </IconButton>
-        <IconButton
-            className={clsx(classes.expand, {
-                [classes.expandOpen]: props.expanded,
-            })}
-            onClick={props.handleExpandClick}
-            aria-expanded={props.expanded}
-            aria-label="show more"
-        >
-            <ExpandMoreIcon />
-        </IconButton>
-    </CardActions>
+                <FavoriteIcon />
+            </IconButton>
+            <IconButton aria-label="done"
+                onClick={props.handleDoneClick}
+                style={props.done ? { color: 'blue' } : null}
+            >
+                <DoneIcon />
+            </IconButton>
+            <IconButton
+                className={clsx(classes.expand, {
+                    [classes.expandOpen]: props.expanded,
+                })}
+                onClick={props.handleExpandClick}
+                aria-expanded={props.expanded}
+                aria-label="show more"
+            >
+                <ExpandMoreIcon />
+            </IconButton>
+        </CardActions>
     );
 }
 export default Actions;
