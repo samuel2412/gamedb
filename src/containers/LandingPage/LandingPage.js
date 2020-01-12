@@ -1,12 +1,15 @@
 import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from "@material-ui/core/Grid"
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import Pagination from '../../components/Navigation/Pagination/Pagination'
 import * as actions from '../../store/actions/index';
 import GamesList from '../../components/GamesList/GamesList';
 import Header from '../../components/Header/Header';
@@ -21,19 +24,24 @@ const useStyles = makeStyles(theme => ({
 
 const LandingPage = props => {
   const classes = useStyles();
-  const currentPage = props.match.params.page;
-  const { games, nextPage, prevPage, isLoading, onFetchGames,gameCount, isAuth } = props;
+  const { games, nextPage, prevPage, isLoading, onFetchGames, isAuth } = props;
+
 
   const filterHandler = useCallback(query => {
     onFetchGames(query)
   }, [onFetchGames]);
 
   useEffect(() => {
-    onFetchGames(`https://api.rawg.io/api/games?page=${currentPage}&page_size=6`);
-  }, [onFetchGames,currentPage])
+    onFetchGames(`https://api.rawg.io/api/games?page=1&page_size=6`);
+  }, [onFetchGames])
 
-  const changePageHandler = (newPage) =>{
-    props.history.push(`/${newPage}`)
+  const nextPageHandler = () => {
+    onFetchGames(nextPage);
+    scrollToTop();
+  }
+
+  const prevPageHandler = () => {
+    onFetchGames(prevPage);
     scrollToTop();
   }
 
@@ -47,21 +55,21 @@ const LandingPage = props => {
     </Container>
   )
 
-console.log(games.length)
 
   const buttonsContainer = (
-    <Container  align='center' className={classes.container}>
-
-      
-      <Pagination
-      currentPage={currentPage}
-      changePageHandler={changePageHandler}
-        prevPage={prevPage}
-        nextPage={nextPage}
-        gameCount={gameCount}
-      />
-
-      
+    <Container align='center' className={classes.container}>
+      <Grid container
+        direction="row"
+        justify="space-around"
+        alignItems="center"
+      >
+        <Button variant="contained" color="secondary" onClick={prevPageHandler} disabled={prevPage === null}>
+          <NavigateBeforeIcon />
+        </Button>
+        <Button variant="contained" color="secondary" onClick={nextPageHandler} disabled={nextPage === null}>
+          <NavigateNextIcon />
+        </Button>
+      </Grid>
 
 
     </Container>
@@ -88,7 +96,6 @@ const mapStateToProps = state => {
     games: state.gamesReducer.games,
     prevPage: state.gamesReducer.prevPage,
     nextPage: state.gamesReducer.nextPage,
-    gameCount: state.gamesReducer.gameCount,
     isAuth: state.authReducer.tokenId !== null,
   };
 }

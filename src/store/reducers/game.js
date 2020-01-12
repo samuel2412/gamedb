@@ -6,7 +6,6 @@ const initialState = {
     nextPage: null,
     prevPage: null,
     isLoading: false,
-    gameCount: 0
 }
 
 const fetchGamesStart = (state,action) => {

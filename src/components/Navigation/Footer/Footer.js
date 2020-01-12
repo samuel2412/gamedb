@@ -9,12 +9,10 @@ const Copyright = () => {
     return (
         <div style={{ color: '#FFFFFF' }}>
             <Typography variant="body2" align="center">
-                {'Copyright © '}
-                <Link color="inherit" href="https://material-ui.com/">
-                    GameDB
-      </Link>{' '}
-                {new Date().getFullYear()}
-                {'.'}
+                {'Developer '}
+                <Link color="inherit" href="https://github.com/samuel2412">
+                    GitHub
+      </Link>{'.'}
             </Typography>
         </div>
     );
@@ -34,10 +32,10 @@ const Footer = props => {
     return (
         <div className={classes.footer} style={{ color: '#FFFFFF' }}>
             <Typography variant="h6" align="center" gutterBottom >
-                Footer
+                GameDB
         </Typography>
             <Typography variant="subtitle1" align="center" component="p">
-                Something here to give the footer a purpose!
+                Application developed using React.js
         </Typography>
             <Copyright />
         </div>

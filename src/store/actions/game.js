@@ -7,6 +7,7 @@ return dispatch => {
         dispatch(fetchGamesStart())
         axios.get(url)
             .then(response => {
+                console.log(response)
                 dispatch(fetchGamesSuccess(response.data))
             })
             .catch(err => {
