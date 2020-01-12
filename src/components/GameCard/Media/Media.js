@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Image from 'material-ui-image';
-import BrokenImageIcon from '@material-ui/icons/BrokenImage';
 
 const Media = props =>{
 

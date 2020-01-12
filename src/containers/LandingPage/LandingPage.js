@@ -24,7 +24,9 @@ const useStyles = makeStyles(theme => ({
 
 const LandingPage = props => {
   const classes = useStyles();
-  const { games, nextPage, prevPage, isLoading, onFetchGames, isAuth } = props;
+  const { games, nextPage, prevPage,
+    isLoading, onFetchGames,isAuth, token, userId, 
+    likeGame,dislikeGame, fetchLikes,likes } = props;
 
 
   const filterHandler = useCallback(query => {
@@ -33,7 +35,10 @@ const LandingPage = props => {
 
   useEffect(() => {
     onFetchGames(`https://api.rawg.io/api/games?page=1&page_size=6`);
-  }, [onFetchGames])
+    if (isAuth) {
+      fetchLikes(token, userId)
+    }
+  }, [onFetchGames,isAuth,token,userId])
 
   const nextPageHandler = () => {
     onFetchGames(nextPage);
@@ -81,7 +86,16 @@ const LandingPage = props => {
 
       <Search onFilter={filterHandler} />
       <div className={classes.container}>
-        {isLoading ? spinner : <GamesList games={games} isAuth={isAuth} />}
+        {isLoading ? spinner :
+          <GamesList
+            games={games}
+            isAuth={isAuth}
+            token={token}
+            userId={userId}
+            likeGame={likeGame}
+            dislikeGame={dislikeGame}
+            likes={likes}
+          />}
       </div>
 
       {buttonsContainer}
@@ -97,6 +111,9 @@ const mapStateToProps = state => {
     prevPage: state.gamesReducer.prevPage,
     nextPage: state.gamesReducer.nextPage,
     isAuth: state.authReducer.tokenId !== null,
+    token: state.authReducer.tokenId,
+    userId: state.authReducer.userId,
+    likes: state.likesReducer.likes
   };
 }
 
@@ -107,8 +124,16 @@ const mapDispatchToProps = dispatch => {
     onFetchGames: (url) =>
       dispatch(actions.fetchGames(url)),
 
+    likeGame: (likeData, token) =>
+      dispatch(actions.likeGame(likeData, token)),
+      
+      dislikeGame: (likeId, token) =>
+      dispatch(actions.dislikeGame(likeId, token)),
+
+    fetchLikes: (token, userId) =>
+      dispatch(actions.fetchLikes(token, userId))
+
   };
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

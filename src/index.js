@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 
 import gamesReducer from './store/reducers/game';
 import authReducer from './store/reducers/auth';
+import likesReducer from './store/reducers/likes';
 
 import './index.css';
 import App from './App';
@@ -18,7 +19,8 @@ const composeEnhancers = (process.env.NODE_ENV === 'development' ?
 
 const rootReducer = combineReducers({
     gamesReducer,
-    authReducer
+    authReducer,
+    likesReducer
 });
 
 

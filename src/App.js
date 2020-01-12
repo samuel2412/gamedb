@@ -6,7 +6,7 @@ import Layout from './components/Layout/Layout';
 import LandingPage from './containers/LandingPage/LandingPage';
 import GameDetail from './containers/GameDetail/GameDetail';
 import Auth from './containers/Auth/Auth';
-import Logout from './containers/Auth/Logout/Logout'
+import Logout from './containers/Auth/Logout/Logout';
 import * as actions from './store/actions/index';
 
 const App = props =>{

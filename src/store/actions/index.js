@@ -7,3 +7,9 @@ export{
     logout,
     authCheckState,
 } from './auth'
+
+export{
+    likeGame,
+    dislikeGame,
+    fetchLikes
+}from './likes'

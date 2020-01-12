@@ -20,11 +20,10 @@ const useStyles = makeStyles(theme => ({
 
 const GameCard = props => {
     const classes = useStyles();
-    const {isAuth} = props;
     const [game, setGame] = useState(props.game);
     const [expanded, setExpanded] = useState(false);
-    const [favorite, setFavorite] = useState(false);
-    const [done,setDone] =useState(false);
+    const [favorite, setFavorite] = useState(props.likedByUser);
+    const [done, setDone] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchGameDetail = () => {
@@ -45,10 +44,16 @@ const GameCard = props => {
         }
         setExpanded(!expanded);
     };
-    const handleFavoriteClick = () =>{
-        setFavorite(!favorite);
+    const handleFavoriteClick = () => {
+        if (!favorite) {
+            props.likeGame({ userId: props.userId, gameId: game.id }, props.token);
+            setFavorite(!favorite);
+        }else{
+            props.dislikeGame(favorite.id, props.token);
+            setFavorite(!favorite);
+        }
     }
-    const handleDoneClick = () =>{
+    const handleDoneClick = () => {
         setDone(!done);
     }
 
@@ -62,21 +67,22 @@ const GameCard = props => {
                     <Media image={game.background_image} />
 
                     <Content
-                    name={game.name}
-                    description={game.description}
-                    expanded={expanded}
-                    isLoading={isLoading}
-                    children={props.children}
+                        name={game.name}
+                        description={game.description}
+                        expanded={expanded}
+                        isLoading={isLoading}
+                        children={props.children}
                     />
 
                     <Actions
-                     handleFavoriteClick={handleFavoriteClick}
-                     handleExpandClick={handleExpandClick}
-                     handleDoneClick={handleDoneClick}
-                     done={done}
-                     favorite={favorite}
-                     expanded={expanded}
-                     />
+                        handleFavoriteClick={handleFavoriteClick}
+                        handleExpandClick={handleExpandClick}
+                        handleDoneClick={handleDoneClick}
+                        done={done}
+                        favorite={favorite}
+                        expanded={expanded}
+                        isAuth={props.isAuth}
+                    />
 
                 </Card>
             </Grid>
@@ -84,6 +90,5 @@ const GameCard = props => {
         </React.Fragment>
     );
 }
-
 
 export default GameCard;

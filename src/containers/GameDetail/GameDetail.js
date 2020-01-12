@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,7 +21,6 @@ const GameDetail = props => {
     const classes = useStyles();
     const [game, setGame] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const { isAuth } = props;
 
 
     useEffect(() => {
@@ -47,7 +45,7 @@ const GameDetail = props => {
         detail = (
             <Container maxWidth="md" className={classes.container}>
 
-                <CardGame game={game} isAuth={isAuth} >
+                <CardGame game={game} >
                 <br />
                     {game.playtime ?
                     <Typography variant="body2" color="textSecondary" component="p">
@@ -95,10 +93,4 @@ const GameDetail = props => {
     );
 }
 
-const mapStateToProps = state => {
-    return {
-        isAuth: state.authReducer.tokenId !== null,
-    };
-}
-
-export default connect(mapStateToProps)(GameDetail);
+export default GameDetail;
