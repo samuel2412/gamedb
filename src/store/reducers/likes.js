@@ -10,10 +10,12 @@ const likeGameStart = (state, action) => {
     });
 };
 const likeGameSuccess = (state, action) => {
-    const newLike = updateObject(action.likeData, { id: action.likeId });
+    
+    const newLike = updateObject(action.likeData, { id: action.likeData.gameId });
     return updateObject(state, {
         likes: state.likes.concat(newLike)
     });
+    
 };
 const likeGameFail = (state, action) => {
     return updateObject(state, {
@@ -27,10 +29,13 @@ const dislikeGameStart = (state, action) => {
     });
 };
 const dislikeGameSuccess = (state, action) => {
-    const newDislike = updateObject(action.likeId, { id: action.likeId });
-    return updateObject(state, {
-        likes: state.likes.filter(newDislike)
+    const newDislike = updateObject(action.likeData, { id: action.likeData.id });
+    const index = state.likes.findIndex(like => like.id === newDislike.id);
+    //return [...state.slice(0, index), ...state.slice(index + 1)];
+  return updateObject(state, {
+        likes: state.likes.slice(0,index)
     });
+   
 };
 const dislikeGameFail = (state, action) => {
     return updateObject(state, {
@@ -53,7 +58,6 @@ const fetchLikesFail = (state, action) => {
     return updateObject(state, {
     });
 };
- 
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {

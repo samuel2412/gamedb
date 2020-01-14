@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,6 +8,7 @@ import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 
 import CardGame from '../../components/GameCard/GameCard';
+import * as actions from '../../store/actions/index';
 
 
 const useStyles = makeStyles(theme => ({
@@ -19,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 const GameDetail = props => {
     const classes = useStyles();
+    const {isAuth, token, userId, likeGame,dislikeGame, fetchLikes,likes } = props;
     const [game, setGame] = useState({});
     const [isLoading, setIsLoading] = useState(true);
 
@@ -33,8 +36,11 @@ const GameDetail = props => {
             .catch(err => {
                 setIsLoading(false);
             })
-    }, [props.match.params.id])
-    console.log(game)
+            if (isAuth) {
+                fetchLikes(token, userId)
+              }
+    }, [props.match.params.id,isAuth,token,userId,fetchLikes])
+    
 
     let detail = (
         <Container align="center" maxWidth="md" className={classes.container}>
@@ -45,25 +51,32 @@ const GameDetail = props => {
         detail = (
             <Container maxWidth="md" className={classes.container}>
 
-                <CardGame game={game} >
-                <br />
+                <CardGame
+                    game={game}
+                    isAuth={isAuth}
+                    token={token}
+                    userId={userId}
+                    likeGame={likeGame}
+                    dislikeGame={dislikeGame}
+                    likedByUser={likes.find(like => like.gameId === game.id)}>
+                    <br />
                     {game.playtime ?
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Average playtime: {game.playtime} hours.
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            Average playtime: {game.playtime} hours.
                     </Typography>
-                    :null}
+                        : null}
 
                     {game.released ?
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Released: {game.released}
-                    </Typography>
-                    :null}
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            Released: {game.released}
+                        </Typography>
+                        : null}
 
-                    {game.esrb_rating ? 
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        ESRB rating: {game.esrb_rating.name}
-                    </Typography>
-                    : null
+                    {game.esrb_rating ?
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            ESRB rating: {game.esrb_rating.name}
+                        </Typography>
+                        : null
                     }
 
                     {game.clip ?
@@ -93,4 +106,29 @@ const GameDetail = props => {
     );
 }
 
-export default GameDetail;
+const mapStateToProps = state => {
+    return {
+        isAuth: state.authReducer.tokenId !== null,
+        token: state.authReducer.tokenId,
+        userId: state.authReducer.userId,
+        likes: state.likesReducer.likes
+    };
+}
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+
+        likeGame: (likeData, token) =>
+            dispatch(actions.likeGame(likeData, token)),
+
+        dislikeGame: (likeId, token) =>
+            dispatch(actions.dislikeGame(likeId, token)),
+
+        fetchLikes: (token, userId) =>
+            dispatch(actions.fetchLikes(token, userId))
+
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameDetail);

@@ -53,13 +53,13 @@ const Search = props => {
     const classes = useStyles();
 
     const { onFilter } = props;
-    const [enteredFilter, setEnteredFilter] = useState(undefined);
+    const [enteredFilter, setEnteredFilter] = useState('');
     const inputRef = useRef();
 
     useEffect(() => {
         const timer = setTimeout(() => {
             if (enteredFilter === inputRef.current.value) {
-                const query = enteredFilter === null ? undefined : `https://api.rawg.io/api/games?page=1&page_size=6&search="${enteredFilter}"`;
+                const query = enteredFilter.length === 0 ? undefined : `https://api.rawg.io/api/games?page=1&page_size=6&search="${enteredFilter}"`;
                 onFilter(query);
             }
         }, 500)

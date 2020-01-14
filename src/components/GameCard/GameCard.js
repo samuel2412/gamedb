@@ -22,7 +22,7 @@ const GameCard = props => {
     const classes = useStyles();
     const [game, setGame] = useState(props.game);
     const [expanded, setExpanded] = useState(false);
-    const [favorite, setFavorite] = useState(props.likedByUser);
+   const {likedByUser} = props;
     const [done, setDone] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -45,12 +45,11 @@ const GameCard = props => {
         setExpanded(!expanded);
     };
     const handleFavoriteClick = () => {
-        if (!favorite) {
+        if (!likedByUser) {
             props.likeGame({ userId: props.userId, gameId: game.id }, props.token);
-            setFavorite(!favorite);
         }else{
-            props.dislikeGame(favorite.id, props.token);
-            setFavorite(!favorite);
+            //console.log(likedByUser)
+            props.dislikeGame({userId: props.userId,id: likedByUser.id}, props.token);
         }
     }
     const handleDoneClick = () => {
@@ -79,7 +78,7 @@ const GameCard = props => {
                         handleExpandClick={handleExpandClick}
                         handleDoneClick={handleDoneClick}
                         done={done}
-                        favorite={favorite}
+                        favorite={likedByUser}
                         expanded={expanded}
                         isAuth={props.isAuth}
                     />

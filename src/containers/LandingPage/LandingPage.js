@@ -27,18 +27,19 @@ const LandingPage = props => {
   const { games, nextPage, prevPage,
     isLoading, onFetchGames,isAuth, token, userId, 
     likeGame,dislikeGame, fetchLikes,likes } = props;
-
+    
 
   const filterHandler = useCallback(query => {
     onFetchGames(query)
   }, [onFetchGames]);
+  
 
   useEffect(() => {
     onFetchGames(`https://api.rawg.io/api/games?page=1&page_size=6`);
     if (isAuth) {
       fetchLikes(token, userId)
     }
-  }, [onFetchGames,isAuth,token,userId])
+  }, [onFetchGames,isAuth,token,userId,fetchLikes])
 
   const nextPageHandler = () => {
     onFetchGames(nextPage);
@@ -124,11 +125,11 @@ const mapDispatchToProps = dispatch => {
     onFetchGames: (url) =>
       dispatch(actions.fetchGames(url)),
 
-    likeGame: (likeData, token) =>
-      dispatch(actions.likeGame(likeData, token)),
+    likeGame: (likeData,token) =>
+      dispatch(actions.likeGame(likeData,token)),
       
-      dislikeGame: (likeId, token) =>
-      dispatch(actions.dislikeGame(likeId, token)),
+      dislikeGame: (likeData,token) =>
+      dispatch(actions.dislikeGame(likeData,token)),
 
     fetchLikes: (token, userId) =>
       dispatch(actions.fetchLikes(token, userId))
