@@ -53,6 +53,7 @@ const GameDetail = props => {
 
                 <CardGame
                     game={game}
+                    isDetail={true}
                     isAuth={isAuth}
                     token={token}
                     userId={userId}

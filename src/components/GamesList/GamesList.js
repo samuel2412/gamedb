@@ -20,18 +20,19 @@ const GamesList = props => {
             <Container maxWidth="md">
                 <Grid container spacing={4}>
                     {games.map(game => (
+                        <Grid item xs={12} sm={6}  key={game.id}>
 
-                        <GameCard
-                            key={game.id}
-                            game={game}
-                            isAuth={isAuth}
-                            token={token}
-                            userId={userId}
-                            likeGame={likeGame}
-                            dislikeGame={dislikeGame}
-                            likedByUser={likes.find(like => Number(like.id) === game.id)}
-                        />
+                            <GameCard
+                                game={game}
+                                isAuth={isAuth}
+                                token={token}
+                                userId={userId}
+                                likeGame={likeGame}
+                                dislikeGame={dislikeGame}
+                                likedByUser={likes.find(like => Number(like.id) === game.id)}
+                            />
 
+                        </Grid>
                     ))}
                 </Grid>
 

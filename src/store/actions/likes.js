@@ -112,7 +112,7 @@ export const fetchLikes = (token, userId) => {
                         id: key
                     });
                 }
-                console.log(fetchedLikes)
+                //console.log(fetchedLikes)
                 dispatch(fetchLikesSuccess(fetchedLikes))
             })
             .catch(err => {
