@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Media from './Media/Media';
 import Content from './Content/Content';
@@ -18,8 +18,7 @@ const useStyles = makeStyles(theme => ({
 
 const GameCard = props => {
     const classes = useStyles();
-    const { isDetail, game,likedByUser,  } = props;
-    const [done, setDone] = useState(false);
+    const { isDetail, game,likedByUser,completedByUser  } = props;
 
     /*   const fetchGameDetail = () => {
           setIsLoading(true)
@@ -48,10 +47,14 @@ const GameCard = props => {
             props.dislikeGame({ userId: props.userId, id: likedByUser.id }, props.token);
         }
     }
-    const handleDoneClick = () => {
-        setDone(!done);
+    const handleCompletedClick = () => {
+        if (!completedByUser) {
+            props.completedGame({ userId: props.userId, gameId: game.id }, props.token);
+        } else {
+            //console.log(likedByUser)
+            props.uncompletedGame({ userId: props.userId, id: completedByUser.id }, props.token);
+        }
     }
-
     return (
         <React.Fragment>
 
@@ -72,8 +75,8 @@ const GameCard = props => {
                     isDetail={isDetail}
                     gameId={game.id}
                     handleFavoriteClick={handleFavoriteClick}
-                    handleDoneClick={handleDoneClick}
-                    done={done}
+                    handleDoneClick={handleCompletedClick}
+                    done={completedByUser}
                     favorite={likedByUser}
                     isAuth={props.isAuth}
                 />

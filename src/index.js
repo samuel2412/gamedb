@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
 import gamesReducer from './store/reducers/game';
 import authReducer from './store/reducers/auth';
 import likesReducer from './store/reducers/likes';
+import completedReducer from './store/reducers/completed';
 
 import './index.css';
 import App from './App';
@@ -20,7 +21,8 @@ const composeEnhancers = (process.env.NODE_ENV === 'development' ?
 const rootReducer = combineReducers({
     gamesReducer,
     authReducer,
-    likesReducer
+    likesReducer,
+    completedReducer
 }); 
 
  const store = createStore(rootReducer,

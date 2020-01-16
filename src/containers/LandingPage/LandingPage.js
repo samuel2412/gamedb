@@ -26,7 +26,8 @@ const LandingPage = props => {
   const classes = useStyles();
   const { games, nextPage, prevPage,
     isLoading, onFetchGames,isAuth, token, userId, 
-    likeGame,dislikeGame, fetchLikes,likes } = props;
+    likeGame,dislikeGame, fetchLikes,likes,
+    completedGame,uncompletedGame, fetchCompleted,completeds  } = props;
     
 
   const filterHandler = useCallback(query => {
@@ -38,8 +39,9 @@ const LandingPage = props => {
     onFetchGames(`https://api.rawg.io/api/games?page=1&page_size=6`);
     if (isAuth) {
       fetchLikes(token, userId)
+      fetchCompleted(token,userId)
     }
-  }, [onFetchGames,isAuth,token,userId,fetchLikes])
+  }, [onFetchGames,isAuth,token,userId,fetchLikes,fetchCompleted])
 
   const nextPageHandler = () => {
     onFetchGames(nextPage);
@@ -96,6 +98,9 @@ const LandingPage = props => {
             likeGame={likeGame}
             dislikeGame={dislikeGame}
             likes={likes}
+            completedGame={completedGame}
+            uncompletedGame={uncompletedGame}
+            completeds={completeds}
           />}
       </div>
 
@@ -114,7 +119,8 @@ const mapStateToProps = state => {
     isAuth: state.authReducer.tokenId !== null,
     token: state.authReducer.tokenId,
     userId: state.authReducer.userId,
-    likes: state.likesReducer.likes
+    likes: state.likesReducer.likes,
+    completeds: state.completedReducer.completeds
   };
 }
 
@@ -132,7 +138,17 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.dislikeGame(likeData,token)),
 
     fetchLikes: (token, userId) =>
-      dispatch(actions.fetchLikes(token, userId))
+      dispatch(actions.fetchLikes(token, userId)),
+
+
+      completedGame: (completedData,token) =>
+      dispatch(actions.completedGame(completedData,token)),
+      
+      uncompletedGame: (completedData,token) =>
+      dispatch(actions.uncompletedGame(completedData,token)),
+
+    fetchCompleted: (token, userId) =>
+      dispatch(actions.fetchCompleted(token, userId))
 
   };
 }

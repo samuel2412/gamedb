@@ -6,7 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import GameCard from '../GameCard/GameCard';
 
 const GamesList = props => {
-    const { games, isAuth, token, userId, likeGame, dislikeGame, likes } = props
+    const { games, isAuth, token, userId, likeGame, dislikeGame, likes,
+        completedGame,uncompletedGame,completeds } = props
     /*    if (likes[0]) {
         console.log(likes[0].id==3498)
     }
@@ -30,6 +31,9 @@ const GamesList = props => {
                                 likeGame={likeGame}
                                 dislikeGame={dislikeGame}
                                 likedByUser={likes.find(like => Number(like.id) === game.id)}
+                                completedGame={completedGame}
+                                uncompletedGame={uncompletedGame}
+                                completedByUser={completeds.find(completed => Number(completed.id) === game.id)}
                             />
 
                         </Grid>

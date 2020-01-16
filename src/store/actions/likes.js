@@ -69,7 +69,7 @@ export const dislikeGame = (likeData,token) => {
                 dispatch(dislikeGameSuccess(likeData))
             })
             .catch(error => {
-                console.log(error)
+               console.log(error)
                 dispatch(dislikeGameFail(error))
             });
     }
@@ -102,6 +102,7 @@ export const fetchLikes = (token, userId) => {
     return dispatch => {
         dispatch(fetchLikesStart())
         //const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`
+
         axios.get(`https://react-gamedb.firebaseio.com/likes/${userId}.json?auth=${token}`)
             .then(res => {
 

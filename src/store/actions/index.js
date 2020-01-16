@@ -13,3 +13,9 @@ export{
     dislikeGame,
     fetchLikes
 }from './likes'
+
+export{
+    completedGame,
+    uncompletedGame,
+    fetchCompleted
+}from './completed'
