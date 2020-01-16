@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
 
 const GameDetail = props => {
     const classes = useStyles();
-    const {isAuth, token, userId, likeGame,dislikeGame, fetchLikes,likes } = props;
+    const { isAuth, token, userId, likeGame, dislikeGame, fetchLikes, likes,
+        completedGame, uncompletedGame, completeds,fetchCompleted } = props;
     const [game, setGame] = useState({});
     const [isLoading, setIsLoading] = useState(true);
 
@@ -36,11 +37,13 @@ const GameDetail = props => {
             .catch(err => {
                 setIsLoading(false);
             })
-            if (isAuth) {
-                fetchLikes(token, userId)
-              }
-    }, [props.match.params.id,isAuth,token,userId,fetchLikes])
-    
+           
+        if (isAuth && likes.length === 0 ) {
+            fetchLikes(token, userId)
+            fetchCompleted(token,userId)
+        }
+    }, [props.match.params.id, isAuth, token, userId, fetchLikes,fetchCompleted,likes])
+
 
     let detail = (
         <Container align="center" maxWidth="md" className={classes.container}>
@@ -52,14 +55,17 @@ const GameDetail = props => {
             <Container maxWidth="md" className={classes.container}>
 
                 <CardGame
-                    game={game}
                     isDetail={true}
+                    game={game}
                     isAuth={isAuth}
                     token={token}
                     userId={userId}
                     likeGame={likeGame}
                     dislikeGame={dislikeGame}
-                    likedByUser={likes.find(like => like.gameId === game.id)}>
+                    likedByUser={likes.find(like => Number(like.id) === game.id)}
+                    completedGame={completedGame}
+                    uncompletedGame={uncompletedGame}
+                    completedByUser={completeds.find(completed => Number(completed.id) === game.id)}>
                     <br />
                     {game.playtime ?
                         <Typography variant="body2" color="textSecondary" component="p">
@@ -112,7 +118,8 @@ const mapStateToProps = state => {
         isAuth: state.authReducer.tokenId !== null,
         token: state.authReducer.tokenId,
         userId: state.authReducer.userId,
-        likes: state.likesReducer.likes
+        likes: state.likesReducer.likes,
+        completeds: state.completedReducer.completeds
     };
 }
 
@@ -127,7 +134,16 @@ const mapDispatchToProps = dispatch => {
             dispatch(actions.dislikeGame(likeId, token)),
 
         fetchLikes: (token, userId) =>
-            dispatch(actions.fetchLikes(token, userId))
+            dispatch(actions.fetchLikes(token, userId)),
+
+        completedGame: (completedData, token) =>
+            dispatch(actions.completedGame(completedData, token)),
+
+        uncompletedGame: (completedData, token) =>
+            dispatch(actions.uncompletedGame(completedData, token)),
+
+        fetchCompleted: (token, userId) =>
+            dispatch(actions.fetchCompleted(token, userId))
 
     };
 }

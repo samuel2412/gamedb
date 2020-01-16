@@ -23,7 +23,6 @@ export const completedGameStart = () => {
 }
 
 export const completedGame = (completedData,token) => {
-    console.log(completedData)
     return dispatch => {
         dispatch(completedGameStart())
         //axios.post(`https://react-gamedb.firebaseio.com/likes.json?auth=${token}`, likeData)
