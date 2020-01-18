@@ -101,8 +101,11 @@ export const fetchCompletedStart = () => {
 export const fetchCompleted = (token, userId) => {
     return dispatch => {
         dispatch(fetchCompletedStart())
-        //const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`
-        axios.get(`https://react-gamedb.firebaseio.com/completed/${userId}.json?auth=${token}`)
+        let auth = `?auth=${token}`;
+        if(token === null){
+            auth = '';
+        }
+        axios.get(`https://react-gamedb.firebaseio.com/completed/${userId}.json${auth}`)
             .then(res => {
                 let gameName
                 const fetchedCompleted = [];

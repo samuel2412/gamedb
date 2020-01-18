@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 //transition: 'backgroundColor 2000ms linear',
 const Navbar = props => {
     const classes = useStyles();
-    const { isAuth } = props;
+    const { isAuth,userId } = props;
    /*  const [color, setColor] = useState({
         backgroundColor: 'transparent',
         transition: 'background 500ms linear'
@@ -101,7 +101,7 @@ const Navbar = props => {
         <div className={classes.grow}>
             <AppBar className={classes.appbar} style={{  backgroundColor: 'transparent' }}>
                 <Toolbar>
-                    <SideDrawer isAuth={isAuth}/>
+                    <SideDrawer isAuth={isAuth} userId={userId}/>
 
                     {title}
 
@@ -115,6 +115,7 @@ const Navbar = props => {
 const mapStateToProps = state => {
     return {
         isAuth: state.authReducer.tokenId !== null,
+        userId: state.authReducer.userId,
     };
 }
 

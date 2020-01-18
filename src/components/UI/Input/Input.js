@@ -35,6 +35,45 @@ const Input = (props) => {
                 </Grid>
 
             break;
+            case ('userInput'):
+                inputElement =
+                    <Grid item xs={12}>
+                        <TextField
+                            error={validationError}
+                            helperText={validationError ? "User Name must be at least 7 characters." : null}
+                            variant="outlined"
+                            fullWidth
+                            name="userName"
+                            label={validationError ?"Error" : "User Name"}
+                            type="text"
+                            id="userName"
+                            autoComplete="userName"
+                            {...props.elementConfig}
+                            value={props.value}
+                            onChange={props.changed}
+                        />
+                    </Grid>
+    
+                break;
+                case ('avatarInput'):
+                    inputElement =
+                        <Grid item xs={12}>
+                            <TextField
+                                error={validationError}
+                                helperText={validationError ? "Please enter valid value." : null}
+                                variant="outlined"
+                                fullWidth
+                                name="avatarUrl"
+                                label={validationError ?"Error" : "Avatar URL"}
+                                type="text"
+                                id="avatarUrl"
+                                {...props.elementConfig}
+                                value={props.value}
+                                onChange={props.changed}
+                            />
+                        </Grid>
+        
+                    break;
 
         case ('passwordInput'):
             inputElement =

@@ -68,10 +68,38 @@ const Auth = props => {
       },
       valid: false,
       touched: false
+    },
+    userName: {
+      elementType: 'userInput',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'User Name'
+      },
+      value: '',
+      validation: {
+        required: false,
+      },
+      valid: true,
+      touched: false
+    },
+    avatarUrl: {
+      elementType: 'avatarInput',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Avatar URL'
+      },
+      value: '',
+      validation: {
+        required: false,
+      },
+      valid: true,
+      touched: false
     }
   });
   const [formIsValid, setFormIsValid] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+
+
 
   const inputChangeHandler = (event, inputIdentifier) => {
     const updatedOrderForm = { ...orderForm };
@@ -94,7 +122,12 @@ const Auth = props => {
     props.onAuth(
       orderForm.email.value,
       orderForm.password.value,
-      isSignup);
+      isSignup,
+      {
+        avatarUrl: orderForm.avatarUrl.value,
+        userName: orderForm.userName.value
+      }
+    );
   }
   const formElementsArray = [];
   for (let key in orderForm) {
@@ -111,11 +144,11 @@ const Auth = props => {
   }
   let redirect = null;
   if (props.isAuth) {
-      redirect = (
-          <Redirect to='/' />
-      )
+    redirect = (
+      <Redirect to='/' />
+    )
   }
- 
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -135,16 +168,18 @@ const Auth = props => {
 
             {formElementsArray.map(formElement => (
               <Grid item xs={12} key={formElement.id}>
-                <Input
-                  key={formElement.id}
-                  elementType={formElement.config.elementType}
-                  elementConfig={formElement.config.elementConfig}
-                  value={formElement.config.value}
-                  invalid={!formElement.config.valid}
-                  touched={formElement.config.touched}
-                  shouldValidate={formElement.config.validation}
-                  changed={(event) => inputChangeHandler(event, formElement.id)}
-                />
+                {!isSignup && (formElement.id === 'userName' || formElement.id === 'avatarUrl') ? null :
+                  <Input
+                    key={formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    invalid={!formElement.config.valid}
+                    touched={formElement.config.touched}
+                    shouldValidate={formElement.config.validation}
+                    changed={(event) => inputChangeHandler(event, formElement.id)}
+                  />
+                }
               </Grid>
             ))}
 
@@ -161,7 +196,7 @@ const Auth = props => {
           </Button>
           <Grid container>
             <Grid item>
-              <Button onClick={() => {setIsSignup(!isSignup)} }>
+              <Button onClick={() => { setIsSignup(!isSignup) }}>
                 {isSignup ? "Already have an account? Login"
                   : "Don't have an account? Sign Up"}
               </Button>
@@ -185,9 +220,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAuth: (email, password, isSignup) =>
-      dispatch(actions.auth(email, password, isSignup)),
+    onAuth: (email, password, isSignup, adicionalUserData) =>
+      dispatch(actions.auth(email, password, isSignup, adicionalUserData)),
   };
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

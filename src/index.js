@@ -11,7 +11,6 @@ import authReducer from './store/reducers/auth';
 import likesReducer from './store/reducers/likes';
 import completedReducer from './store/reducers/completed';
 
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

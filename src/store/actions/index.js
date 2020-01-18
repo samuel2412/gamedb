@@ -6,6 +6,7 @@ export{
     auth,
     logout,
     authCheckState,
+    fetchUserAdicionalData
 } from './auth'
 
 export{

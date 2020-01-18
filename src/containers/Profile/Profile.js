@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(5),
         borderRadius: '5px',
         flexDirection: 'column',
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('sm')]: {
             flexDirection: "row",
         },
 
@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: "column",
         margin: theme.spacing(3),
         textAlign: "left",
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('sm')]: {
             textAlign: "center",
         },
     },
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: "column",
         margin: 'auto',
         width: '100%',
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('sm')]: {
             flexDirection: "column",
             width: 'auto'
         },
@@ -58,7 +58,8 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         borderRadius: '5px',
         height: '200px',
-        [theme.breakpoints.up('md')]: {
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up('sm')]: {
             width: '200px',
         },
     },
@@ -73,7 +74,7 @@ const useStyles = makeStyles(theme => ({
 
 const Profile = props => {
     const classes = useStyles();
-    const { isAuth, token, userId, fetchLikes, likes, completeds, fetchCompleted } = props;
+    const {userName,avatarUrl, likes, completeds,fetchLikes, fetchCompleted,fetchUserAdicionalData } = props;
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
@@ -81,12 +82,13 @@ const Profile = props => {
     };
 
     useEffect(() => {
-        if (isAuth && likes.length === 0) {
-            fetchLikes(token, userId)
-            fetchCompleted(token, userId)
-        }
-    }, [isAuth, token, userId, fetchLikes, fetchCompleted, likes])
-
+      
+            fetchLikes(null,  props.match.params.userId);
+            fetchCompleted(null,  props.match.params.userId);
+            fetchUserAdicionalData(null, props.match.params.userId);
+        
+    }, [props.match.params.userId, fetchLikes, fetchCompleted])
+ 
 
     //console.log(likes)
     //console.log(completeds)
@@ -94,10 +96,10 @@ const Profile = props => {
     const userData = (
         <div className={classes.userData}>
             <Avatar alt="Avatar"
-                src="https://i.pinimg.com/280x280_RS/77/f9/af/77f9afc9767a1bfada4ec4453a42dff4.jpg"
+                src={avatarUrl}
                 className={classes.avatar} />
             <Typography variant="subtitle1" color="textPrimary" component="p" gutterBottom>
-                user name
+                {userName}
     </Typography>
 
             <Typography variant="body1" color="textSecondary" component="span" >
@@ -173,25 +175,24 @@ const Profile = props => {
 
 const mapStateToProps = state => {
     return {
-        isAuth: state.authReducer.tokenId !== null,
-        token: state.authReducer.tokenId,
-        userId: state.authReducer.userId,
         likes: state.likesReducer.likes,
-        completeds: state.completedReducer.completeds
+        completeds: state.completedReducer.completeds,
+        avatarUrl: state.authReducer.avatarUrl,
+        userName: state.authReducer.userName,
     };
 }
 
 
 const mapDispatchToProps = dispatch => {
     return {
-
-
-
         fetchLikes: (token, userId) =>
             dispatch(actions.fetchLikes(token, userId)),
 
         fetchCompleted: (token, userId) =>
-            dispatch(actions.fetchCompleted(token, userId))
+            dispatch(actions.fetchCompleted(token, userId)),
+
+        fetchUserAdicionalData: (token,userId) =>
+            dispatch(actions.fetchUserAdicionalData(token,userId))
 
     };
 }

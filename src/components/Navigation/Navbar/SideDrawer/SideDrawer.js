@@ -52,16 +52,18 @@ const SideDrawer = props => {
                     </ListItem>
                 </Link>
 
-                <Link to='/profile/8NthHhyqMoQ8NXmyC7mzl7e3Z' style={{ textDecoration: 'none', color: "inherit" }}>
-                    <ListItem button>
-                        <ListItemIcon>
-                            <AccountCircleIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Profile" />
-                    </ListItem>
-                </Link>
+                {props.userId ?
+                    <Link to={`/profile/${props.userId}`} style={{ textDecoration: 'none', color: "inherit" }}>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <AccountCircleIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Profile" />
+                        </ListItem>
+                    </Link>
+                    : null}
 
-                <Link to= {props.isAuth ? '/logout' : '/authentication' } style={{ textDecoration: 'none', color: "inherit" }}>
+                <Link to={props.isAuth ? '/logout' : '/authentication'} style={{ textDecoration: 'none', color: "inherit" }}>
                     <ListItem button>
                         <ListItemIcon>
                             {props.isAuth
