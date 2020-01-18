@@ -52,7 +52,7 @@ const SideDrawer = props => {
                     </ListItem>
                 </Link>
 
-                <Link to='/' style={{ textDecoration: 'none', color: "inherit" }}>
+                <Link to='/profile/8NthHhyqMoQ8NXmyC7mzl7e3Z' style={{ textDecoration: 'none', color: "inherit" }}>
                     <ListItem button>
                         <ListItemIcon>
                             <AccountCircleIcon />

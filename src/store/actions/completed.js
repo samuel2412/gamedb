@@ -26,7 +26,7 @@ export const completedGame = (completedData,token) => {
     return dispatch => {
         dispatch(completedGameStart())
         //axios.post(`https://react-gamedb.firebaseio.com/likes.json?auth=${token}`, likeData)
-        axios.post(`https://react-gamedb.firebaseio.com/completed/${completedData.userId}/${completedData.gameId}.json?auth=${token}`,new Date())
+        axios.post(`https://react-gamedb.firebaseio.com/completed/${completedData.userId}/${completedData.gameId}.json?auth=${token}`,{gameName: completedData.gameName})
             .then(response => {
                 dispatch(completedGameSuccess(response.data.name, completedData))
             })
@@ -104,12 +104,15 @@ export const fetchCompleted = (token, userId) => {
         //const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`
         axios.get(`https://react-gamedb.firebaseio.com/completed/${userId}.json?auth=${token}`)
             .then(res => {
-
+                let gameName
                 const fetchedCompleted = [];
                 for (let key in res.data) {
+                    for (let innerKey in res.data[key]) {
+                        gameName= res.data[key][innerKey].gameName
+                    }
                     fetchedCompleted.push({
-                        ...res.data[key],
-                        id: key
+                        id: key,
+                        gameName
                     });
                 }
                 //console.log(fetchedLikes)

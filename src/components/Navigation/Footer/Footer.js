@@ -35,7 +35,7 @@ const Footer = props => {
                 GameDB
         </Typography>
             <Typography variant="subtitle1" align="center" component="p">
-                Application developed using React.js
+                Application developed using ReactJS
         </Typography>
             <Copyright />
         </div>

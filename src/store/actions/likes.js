@@ -22,11 +22,11 @@ export const likeGameStart = () => {
     }
 }
 
-export const likeGame = (likeData,token) => {
+export const likeGame = (likeData, token) => {
     return dispatch => {
         dispatch(likeGameStart())
         //axios.post(`https://react-gamedb.firebaseio.com/likes.json?auth=${token}`, likeData)
-        axios.post(`https://react-gamedb.firebaseio.com/likes/${likeData.userId}/${likeData.gameId}.json?auth=${token}`,new Date())
+        axios.post(`https://react-gamedb.firebaseio.com/likes/${likeData.userId}/${likeData.gameId}.json?auth=${token}`, { gameName: likeData.gameName })
             .then(response => {
                 dispatch(likeGameSuccess(response.data.name, likeData))
             })
@@ -57,7 +57,7 @@ export const dislikeGameStart = () => {
     }
 }
 
-export const dislikeGame = (likeData,token) => {
+export const dislikeGame = (likeData, token) => {
     //https://mrdapper.firebaseio.com/v0/userFavs/41/107657061.json
     // console.log(`https://react-gamedb.firebaseio.com/likes/${likeId}.json?auth=${token}`)
     return dispatch => {
@@ -69,7 +69,7 @@ export const dislikeGame = (likeData,token) => {
                 dispatch(dislikeGameSuccess(likeData))
             })
             .catch(error => {
-               console.log(error)
+                console.log(error)
                 dispatch(dislikeGameFail(error))
             });
     }
@@ -105,12 +105,15 @@ export const fetchLikes = (token, userId) => {
 
         axios.get(`https://react-gamedb.firebaseio.com/likes/${userId}.json?auth=${token}`)
             .then(res => {
-
+                let gameName
                 const fetchedLikes = [];
                 for (let key in res.data) {
+                    for (let innerKey in res.data[key]) {
+                        gameName= res.data[key][innerKey].gameName
+                    }
                     fetchedLikes.push({
-                        ...res.data[key],
-                        id: key
+                        id: key,
+                        gameName
                     });
                 }
                 //console.log(fetchedLikes)

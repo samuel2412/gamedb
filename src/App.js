@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Layout from './components/Layout/Layout';
 import LandingPage from './containers/LandingPage/LandingPage';
 import GameDetail from './containers/GameDetail/GameDetail';
+import Profile from './containers/Profile/Profile';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import * as actions from './store/actions/index';
@@ -20,6 +21,7 @@ const App = props =>{
       <Route path='/authentication' component={Auth} />
       <Route path='/logout' component={Logout} />
       <Route path='/game/:id' component={GameDetail} />
+      <Route path='/profile/:userId' component={Profile} />
       <Route exact path="/" component={ LandingPage } />
       <Redirect to='/' />
     </Switch>

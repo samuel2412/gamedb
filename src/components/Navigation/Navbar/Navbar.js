@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
         color: '#FFFFFF',
     },
     appbar: {
-        position: "fixed",
+        position: "absolute",
         padding: theme.spacing(1),
         top: '0',
         boxShadow: 'none',
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 const Navbar = props => {
     const classes = useStyles();
     const { isAuth } = props;
-    const [color, setColor] = useState({
+   /*  const [color, setColor] = useState({
         backgroundColor: 'transparent',
         transition: 'background 500ms linear'
     })
@@ -67,7 +67,7 @@ const Navbar = props => {
             })
         }
     }
-
+ */
 
 
     const title = (
@@ -99,7 +99,7 @@ const Navbar = props => {
 
     return (
         <div className={classes.grow}>
-            <AppBar className={classes.appbar} style={ color }>
+            <AppBar className={classes.appbar} style={{  backgroundColor: 'transparent' }}>
                 <Toolbar>
                     <SideDrawer isAuth={isAuth}/>
 

@@ -41,7 +41,7 @@ const GameCard = props => {
 
     const handleFavoriteClick = () => {
         if (!likedByUser) {
-            props.likeGame({ userId: props.userId, gameId: game.id }, props.token);
+            props.likeGame({ userId: props.userId, gameId: game.id,gameName: game.name }, props.token);
         } else {
             //console.log(likedByUser)
             props.dislikeGame({ userId: props.userId, id: likedByUser.id }, props.token);
@@ -49,7 +49,7 @@ const GameCard = props => {
     }
     const handleCompletedClick = () => {
         if (!completedByUser) {
-            props.completedGame({ userId: props.userId, gameId: game.id }, props.token);
+            props.completedGame({ userId: props.userId, gameId: game.id, gameName: game.name }, props.token);
         } else {
             //console.log(likedByUser)
             props.uncompletedGame({ userId: props.userId, id: completedByUser.id }, props.token);
