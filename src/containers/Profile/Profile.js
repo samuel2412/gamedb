@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -8,8 +8,9 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DoneIcon from '@material-ui/icons/Done';
-import Divider from '@material-ui/core/Divider'
 import pink from '@material-ui/core/colors/pink';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import * as actions from '../../store/actions/index';
 import Avatar from '@material-ui/core/Avatar';
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(5),
         borderRadius: '5px',
         flexDirection: 'column',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             flexDirection: "row",
         },
 
@@ -32,15 +33,21 @@ const useStyles = makeStyles(theme => ({
     innerConteiner: {
         display: 'flex',
         flexDirection: "column",
-        width: '100%',
         margin: theme.spacing(3),
-        textAlign: "left"
+        textAlign: "left",
+        [theme.breakpoints.up('md')]: {
+            textAlign: "center",
+        },
     },
     gamesData: {
         display: 'flex',
-        flexDirection: "row",
+        flexDirection: "column",
         margin: 'auto',
-        maxHeight: '100vh'
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            flexDirection: "column",
+            width: 'auto'
+        },
     },
     userData: {
         display: 'flex',
@@ -51,7 +58,7 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         borderRadius: '5px',
         height: '200px',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             width: '200px',
         },
     },
@@ -67,11 +74,13 @@ const useStyles = makeStyles(theme => ({
 const Profile = props => {
     const classes = useStyles();
     const { isAuth, token, userId, fetchLikes, likes, completeds, fetchCompleted } = props;
+    const [value, setValue] = useState(0);
 
-
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     useEffect(() => {
-
         if (isAuth && likes.length === 0) {
             fetchLikes(token, userId)
             fetchCompleted(token, userId)
@@ -80,60 +89,84 @@ const Profile = props => {
 
 
     //console.log(likes)
-    console.log(completeds)
+    //console.log(completeds)
+
+    const userData = (
+        <div className={classes.userData}>
+            <Avatar alt="Avatar"
+                src="https://i.pinimg.com/280x280_RS/77/f9/af/77f9afc9767a1bfada4ec4453a42dff4.jpg"
+                className={classes.avatar} />
+            <Typography variant="subtitle1" color="textPrimary" component="p" gutterBottom>
+                user name
+    </Typography>
+
+            <Typography variant="body1" color="textSecondary" component="span" >
+                <FavoriteIcon className={classes.inlineImg} style={{ color: 'red' }} />
+                {` ${likes.length}`}
+            </Typography>
+
+            <Typography variant="body1" color="textSecondary" component="span" >
+                <DoneIcon className={classes.inlineImg} style={{ color: 'blue' }} />
+                {` ${completeds.length}`}
+            </Typography>
+
+        </div>
+    );
 
 
-    return (
-        <Container align='center' className={classes.root}>
-            <div className={classes.userData}>
-                <Avatar alt="Avatar"
-                    src="https://i.pinimg.com/280x280_RS/77/f9/af/77f9afc9767a1bfada4ec4453a42dff4.jpg"
-                    className={classes.avatar} />
-                <Typography variant="subtitle1" color="textPrimary" component="p" gutterBottom>
-                    user name
-        </Typography>
-
-                <Typography variant="body1" color="textSecondary" component="span" >
-                    <FavoriteIcon className={classes.inlineImg} style={{ color: 'red' }} />
-                    {` ${likes.length}`}
-                </Typography>
-
-                <Typography variant="body1" color="textSecondary" component="span" >
-                    <DoneIcon className={classes.inlineImg} style={{ color: 'blue' }} />
-                    {` ${completeds.length}`}
-                </Typography>
-
-            </div>
-            <div className={classes.gamesData}>
+    const content = (
+        value === 0 ?
+            <>
                 <div className={classes.innerConteiner}>
-                    <Typography variant="h6" color="textPrimary" component="p">
-                        Liked
-                </Typography>
-                <Divider />
                     {likes.map(like => (
                         <Link to={`/game/${like.id}`} key={like.id} style={{ textDecoration: 'none' }}>
-                            <Typography  variant="body2" color="textSecondary" component="p">
+                            <Typography variant="body2" color="textSecondary" component="p">
                                 {like.gameName}
                             </Typography>
                         </Link>
                     ))}
                 </div>
-                   
-                       
+            </>
+            :
+            <>
                 <div className={classes.innerConteiner}>
-                    <Typography variant="h6" color="textPrimary" component="p">
-                        Completed
-                </Typography>
-                <Divider />
                     {completeds.map(completed => (
                         <Link to={`/game/${completed.id}`} key={completed.id} style={{ textDecoration: 'none' }}>
-                            <Typography  variant="body2" color="textSecondary" component="p" gutterBottom>
+                            <Typography variant="body2" color="textSecondary" component="p" gutterBottom>
                                 {completed.gameName}
                             </Typography>
                         </Link>
                     ))}
                 </div>
-            </div>
+            </>
+
+    );
+
+    const gamesData = (
+        <div className={classes.gamesData}>
+            <Tabs
+                value={value}
+                onChange={handleChange}
+                variant="fullWidth"
+                indicatorColor="secondary"
+                textColor="secondary"
+                aria-label="icon label tabs example"
+            >
+                <Tab icon={<FavoriteIcon style={{ color: 'red' }} />} label="Liked" />
+                <Tab icon={<DoneIcon style={{ color: 'blue' }} />} label="Completed" />
+            </Tabs>
+
+            {content}
+
+        </div>
+    );
+
+
+    return (
+        <Container align='center' className={classes.root}>
+            {userData}
+            {gamesData}
+
         </Container>
     );
 }
